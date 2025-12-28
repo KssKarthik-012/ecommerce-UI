@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { dashboardAPI } from '../../services/api';
 import api from '../../services/apiConfig';
+import AlertModal from '../shared/AlertModal';
 import {
   TrendingUp as TrendingUpIcon,
   ShoppingCart as ShoppingCartIcon,
@@ -13,7 +14,7 @@ import {
 } from '@mui/icons-material';
 
 // Helper to download files from API
-const downloadFile = async (endpoint, filename) => {
+const downloadFile = async (endpoint, filename, onError) => {
   try {
     const token = localStorage.getItem('token');
     const fullUrl = `${api}${endpoint}`;
@@ -40,7 +41,9 @@ const downloadFile = async (endpoint, filename) => {
     window.URL.revokeObjectURL(url);
   } catch (err) {
     console.error('Download error:', err);
-    alert('Failed to download file. Please try again.');
+    if (onError) {
+      onError();
+    }
   }
 };
 
@@ -48,6 +51,13 @@ const Reports = () => {
   const [overview, setOverview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -79,6 +89,14 @@ const Reports = () => {
 
   return (
     <div className="space-y-6">
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
@@ -169,10 +187,10 @@ const Reports = () => {
             <TrendingUpIcon className="text-green-600" /> Sales Report
           </div>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=pdf', 'sales-report.pdf')}>
+            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=pdf', 'sales-report.pdf', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
               <PdfIcon className="w-4 h-4" /> Export PDF
             </button>
-            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=excel', 'sales-report.xlsx')}>
+            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=excel', 'sales-report.xlsx', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
               <ExcelIcon className="w-4 h-4" /> Export Excel
             </button>
           </div>
@@ -216,10 +234,10 @@ const Reports = () => {
             <InventoryIcon className="text-blue-600" /> Inventory Report
           </div>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/inventory-report/export?format=pdf', 'inventory-report.pdf')}>
+            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/inventory-report/export?format=pdf', 'inventory-report.pdf', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
               <PdfIcon className="w-4 h-4" /> Export PDF
             </button>
-            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/inventory-report/export?format=excel', 'inventory-report.xlsx')}>
+            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/inventory-report/export?format=excel', 'inventory-report.xlsx', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
               <ExcelIcon className="w-4 h-4" /> Export Excel
             </button>
           </div>

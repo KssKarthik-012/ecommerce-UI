@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ordersAPI } from '../../services/api';
+import AlertModal from '../shared/AlertModal';
 import {
   Search as SearchIcon,
   Visibility as ViewIcon,
@@ -81,6 +82,13 @@ const OrderManagement = () => {
   const [editingId, setEditingId] = useState(null);
   const [deliveryLink, setDeliveryLink] = useState('');
   const [saving, setSaving] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -154,7 +162,13 @@ const OrderManagement = () => {
         });
       }
     } catch (err) {
-      alert('Failed to update status');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to update status',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setStatusUpdating(false);
     }
@@ -168,7 +182,13 @@ const OrderManagement = () => {
       fetchOrders();
       closeOrderDetail();
     } catch (err) {
-      alert('Failed to delete order');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to delete order',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setDeleteLoading(false);
     }
@@ -192,7 +212,13 @@ const OrderManagement = () => {
       console.error('Error details:', err.response?.data);
       console.error('Error status:', err.response?.status);
       console.error('Error URL:', err.config?.url);
-      alert('Failed to save delivery link');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to save delivery link',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setSaving(false);
     }
@@ -225,6 +251,14 @@ const OrderManagement = () => {
 
   return (
     <div className="space-y-6">
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       {/* Page Header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -585,7 +619,13 @@ const OrderManagement = () => {
                         await fetchOrders();
                       } catch (err) {
                         console.error('Failed to update delivery info:', err);
-                        alert('Failed to update delivery info');
+                        setAlertModal({
+                          isOpen: true,
+                          title: 'Error',
+                          message: 'Failed to update delivery info',
+                          type: 'error',
+                          onConfirm: null,
+                        });
                       }
                       setStatusUpdating(false);
                     }}

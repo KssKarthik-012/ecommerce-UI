@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ordersAPI, productsAPI } from '../../services/api';
+import AlertModal from '../shared/AlertModal';
 import {
   Add as AddIcon,
   Download as DownloadIcon,
@@ -104,6 +105,13 @@ const OfflineOrders = () => {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
   
   // Form state for adding offline order
   const [formData, setFormData] = useState({
@@ -233,7 +241,13 @@ const OfflineOrders = () => {
   const downloadExcelReport = async (type) => {
     try {
       if (!dateRange.fromDate || !dateRange.toDate) {
-        alert('Please select both from and to dates');
+        setAlertModal({
+          isOpen: true,
+          title: 'Error',
+          message: 'Please select both from and to dates',
+          type: 'error',
+          onConfirm: null,
+        });
         return;
       }
       
@@ -273,6 +287,14 @@ const OfflineOrders = () => {
 
   return (
     <div className="space-y-6">
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       {/* Page Header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

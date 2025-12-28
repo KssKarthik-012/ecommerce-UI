@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, saveCart } from '../../cartSlice';
 import Footer from './Footer';
 import { lightgreenbox } from '../../classConstat';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Helper function to format weight from grams to readable format
 const formatWeight = (weightInGrams) => {
@@ -84,6 +86,14 @@ const ShopPage = () => {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    toast.success(`${product.name} added to cart!`, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const handleTabChange = (tab) => {
@@ -95,6 +105,7 @@ const ShopPage = () => {
 
   return (
     <div className="public-website">
+      <ToastContainer />
       {/* Header */}
       <PublicHeader />
       {/* <CustomerTabs activeTab={activeTab} onTabChange={handleTabChange} userName={customerName} /> */}
@@ -248,7 +259,7 @@ const ShopPage = () => {
                       )}
 
                       {/* Footer */}
-                      <div className="mt-auto flex items-center justify-between">
+                      <div className="mt-auto flex items-end justify-between">
                         <div className="flex flex-col">
                           {product.discount_price && product.discount_price > 0 ? (
                             <div className="flex flex-col gap-1">

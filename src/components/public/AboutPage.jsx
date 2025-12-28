@@ -295,10 +295,11 @@ const AboutPage = () => {
                     <a className="text-gray-700 hover:text-green-700" href="tel:+919884198858">+91  9884198858</a>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Mail className="text-green-700 mt-1" />
+                    <Mail className="text-green-700 mt-0" />
                     <div className="space-y-1">
-                      <a className="block text-gray-700 hover:text-green-700" href="mailto:support@riyathirstquenchers.com">support@riyathirstquenchers.com</a>
-                      <a className="block text-gray-700 hover:text-green-700" href="mailto:riyathirstquenchers@gmail.com">riyathirstquenchers@gmail.com</a>
+                      <a className="block text-gray-700 hover:text-green-700" href="md@rtqfoods.com">md@rtqfoods.com</a>
+                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:support@riyathirstquenchers.com">support@riyathirstquenchers.com</a> */}
+                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:riyathirstquenchers@gmail.com">riyathirstquenchers@gmail.com</a> */}
                     </div>
                   </div>
                 </div>

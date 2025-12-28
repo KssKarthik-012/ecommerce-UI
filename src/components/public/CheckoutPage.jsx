@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import PublicHeader from '../shared/PublicHeader';
 import CustomerTabs from '../shared/CustomerTabs';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { lightgreenbox } from '../../classConstat';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -69,7 +70,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [deliveryCharge, setDeliveryCharge] = useState(0);
-  
+
   // Get selected items from navigation state or fallback to all cart items
   const selectedItems = location.state?.selectedItems || [];
   const orderAmount = selectedItems.reduce((sum, item) => sum + ((item.discount_price || item.price) * (item.quantity || 1)), 0);
@@ -88,7 +89,7 @@ const CheckoutPage = () => {
             setIsEmailReadonly(true);
           }
         }
-      } catch {}
+      } catch { }
     }
   }, []);
   // Recalculate delivery charge when state or selected items change
@@ -112,7 +113,7 @@ const CheckoutPage = () => {
 
   const validateDeliveryForm = () => {
     const errors = {};
-    
+
     if (!deliveryForm.fullName.trim()) errors.fullName = 'Full name is required';
     if (!deliveryForm.email.trim()) errors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(deliveryForm.email)) errors.email = 'Please enter a valid email';
@@ -123,7 +124,7 @@ const CheckoutPage = () => {
     if (!deliveryForm.state.trim()) errors.state = 'State is required';
     if (!deliveryForm.pincode.trim()) errors.pincode = 'Pincode is required';
     else if (!/^\d{6}$/.test(deliveryForm.pincode)) errors.pincode = 'Please enter a valid 6-digit pincode';
-    
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -147,9 +148,9 @@ const CheckoutPage = () => {
       const res = await fetch(`${API_BASE_URL}/orders/payments/create-razorpay-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-        body: JSON.stringify({ 
-          amount: finalAmount, 
-          currency: 'INR', 
+        body: JSON.stringify({
+          amount: finalAmount,
+          currency: 'INR',
           receipt: `rcpt_${Date.now()}`,
           items: selectedItems,
           deliveryDetails: deliveryForm,
@@ -180,21 +181,21 @@ const CheckoutPage = () => {
         handler: async function (response) {
           try {
             // 4. Verify payment with backend
-          const verifyRes = await fetch(`${API_BASE_URL}/orders/payments/verify-razorpay`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
+            const verifyRes = await fetch(`${API_BASE_URL}/orders/payments/verify-razorpay`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
                 orderId: dbOrderId
-            })
-          });
-          const verifyData = await verifyRes.json();
-            
-          if (verifyData.success) {
-            navigate('/order-success');
-          } else {
+              })
+            });
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              navigate('/order-success');
+            } else {
               setError('Payment verification failed: ' + (verifyData.message || 'Unknown error'));
             }
           } catch (error) {
@@ -220,13 +221,19 @@ const CheckoutPage = () => {
   return (
     <div className="public-website">
       <PublicHeader />
-      <CustomerTabs activeTab="checkout" onTabChange={handleTabChange} userName={customerName} />
-      <div className="container">
-        <div className="checkout-header">
-          <h1 className="checkout-title"><ShoppingCartIcon /> Checkout</h1>
-          <p className="checkout-subtitle">Complete your purchase</p>
-        </div>
-        
+      {/* <CustomerTabs activeTab="checkout" onTabChange={handleTabChange} userName={customerName} /> */}
+     <div className="shop-container">
+        <section className={`shop-section ${lightgreenbox} mb-5`}>
+          <div className="text-center ">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+              <ShoppingCartIcon fontSize='20px'/> Checkout
+            </h1>
+            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-0">
+              Complete your purchase
+            </p>
+          </div>
+        </section>
+
         {selectedItems.length === 0 ? (
           <div className="no-items">
             <p>No items selected for checkout.</p>
@@ -245,7 +252,7 @@ const CheckoutPage = () => {
                     <span className="item-quantity">x{item.quantity || 1}</span>
                     {item.discount_price && item.discount_price > 0 ? (
                       <div className="item-price-section">
-                        <span className="item-original-price" style={{textDecoration: 'line-through'}}>₹{(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                        <span className="item-original-price" style={{ textDecoration: 'line-through' }}>₹{(item.price * (item.quantity || 1)).toFixed(2)}</span>
                         <span className="item-price">₹{((item.discount_price || item.price) * (item.quantity || 1)).toFixed(2)}</span>
                       </div>
                     ) : (
@@ -266,7 +273,7 @@ const CheckoutPage = () => {
                 <div className="delivery-form-section">
                   <h3>Delivery Details</h3>
                   <p className="form-subtitle">Please provide your delivery information</p>
-                  
+
                   <div className="delivery-form">
                     <div className="form-row">
                       <div className="form-group">
@@ -291,7 +298,7 @@ const CheckoutPage = () => {
                         {formErrors.email && <span className="error-text">{formErrors.email}</span>}
                       </div>
                     </div>
-                    
+
                     <div className="form-row">
                       <div className="form-group">
                         <label>Phone Number *</label>
@@ -314,7 +321,7 @@ const CheckoutPage = () => {
                         {formErrors.pincode && <span className="error-text">{formErrors.pincode}</span>}
                       </div>
                     </div>
-                    
+
                     <div className="form-group">
                       <label>Address *</label>
                       <textarea
@@ -325,7 +332,7 @@ const CheckoutPage = () => {
                       />
                       {formErrors.address && <span className="error-text">{formErrors.address}</span>}
                     </div>
-                    
+
                     <div className="form-row">
                       <div className="form-group">
                         <label>City *</label>
@@ -342,7 +349,7 @@ const CheckoutPage = () => {
                         <select
                           value={deliveryForm.state}
                           onChange={e => handleDeliveryFormChange('state', e.target.value)}
-                          className={formErrors.state ? 'error' : ''}
+                          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors h-[49.78px] ${formErrors.state ? 'border-red-500' : 'border-gray-300'}`}
                         >
                           <option value="">Select State</option>
                           {INDIAN_STATES.map(state => (
@@ -352,7 +359,7 @@ const CheckoutPage = () => {
                         {formErrors.state && <span className="error-text">{formErrors.state}</span>}
                       </div>
                     </div>
-                    
+
                     <div className="form-group">
                       <label>Delivery Instructions (Optional)</label>
                       <textarea
@@ -364,12 +371,12 @@ const CheckoutPage = () => {
                     </div>
                   </div>
                 </div>
-                
-                <div className="checkout-actions">
+
+                <div className="checkout-actions max-sm:mb-10">
                   <button className="back-btn" onClick={() => navigate('/cart')}>
                     Back to Cart
                   </button>
-                  <button className="proceed-btn" onClick={handleProceedToPayment}>
+                  <button className="proceed-btn bg-green-600" onClick={handleProceedToPayment}>
                     Proceed to Payment
                   </button>
                 </div>
@@ -392,16 +399,16 @@ const CheckoutPage = () => {
                     Edit Delivery Details
                   </button>
                 </div>
-                
+
                 {error && <div className="error-message">{error}</div>}
-                
+
                 <div className="checkout-actions">
                   <button className="back-btn" onClick={() => navigate('/cart')}>
                     Back to Cart
                   </button>
-        <button className="checkout-btn" onClick={handleRazorpayPayment} disabled={loading}>
-          {loading ? 'Processing...' : 'Pay with Razorpay'}
-        </button>
+                  <button className="checkout-btn" onClick={handleRazorpayPayment} disabled={loading}>
+                    {loading ? 'Processing...' : 'Pay with Razorpay'}
+                  </button>
                 </div>
               </>
             )}

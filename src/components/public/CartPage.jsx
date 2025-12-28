@@ -130,7 +130,7 @@ const CartPage = () => {
                             </div>
                           </div>
 
-                          <div className="sm:col-span-6">
+                          <div className="sm:col-span-4">
                             <h3 className="font-medium text-gray-900">{item.name}</h3>
 
                           </div>

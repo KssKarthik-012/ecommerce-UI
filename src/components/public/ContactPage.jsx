@@ -286,30 +286,44 @@ const ContactPage = () => {
             </div>
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="rounded-2xl border border-gray-100 bg-white p-6 sm:p-8 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <MapPin className="text-green-700" />
-                  <div>
-                    <p className="font-semibold text-gray-900">RTQ FOODS</p>
-                    <p className="text-gray-700">73/49, 2nd St, Secretariat Colony, Kilpauk, Chennai, Tamil Nadu 600010</p>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      <a
-                        href="https://goo.gl/maps/zxzo6oXEyfiiBQ9B9"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 text-white text-sm font-medium"
-                      >
-                        <MapPin size={16} /> Open Maps
-                      </a>
-                      <a
-                        href="https://instagram.com/riyathirstquenchers?igshid=OTJlNzQ0NWM="
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-pink-600 px-5 py-2.5 text-white text-sm font-medium"
-                      >
-                        <Instagram size={16} /> Instagram
-                      </a>
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="text-green-700 mt-1" />
+                    <div>
+                      <p className="font-semibold text-gray-900">RTQ FOODS</p>
+                      <p className="text-gray-700">73/49, 2nd St, Secretariat Colony, Kilpauk, Chennai, Tamil Nadu 600010</p>
                     </div>
                   </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="text-green-700" />
+                    <a className="text-gray-700 hover:text-green-700" href="tel:+919884198858">+91  9884198858</a>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="text-green-700 mt-0" />
+                    <div className="space-y-1">
+                      <a className="block text-gray-700 hover:text-green-700" href="md@rtqfoods.com">md@rtqfoods.com</a>
+                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:support@riyathirstquenchers.com">support@riyathirstquenchers.com</a> */}
+                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:riyathirstquenchers@gmail.com">riyathirstquenchers@gmail.com</a> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="https://goo.gl/maps/zxzo6oXEyfiiBQ9B9"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 !text-white text-sm font-medium"
+                  >
+                    <MapPin size={16} /> View on Google Maps
+                  </a>
+                  <a
+                    href="https://instagram.com/riyathirstquenchers?igshid=OTJlNzQ0NWM="
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-pink-600 px-5 py-2.5 !text-white text-sm font-medium"
+                  >
+                    <Instagram size={16} /> Follow on Instagram
+                  </a>
                 </div>
               </div>
               <div>

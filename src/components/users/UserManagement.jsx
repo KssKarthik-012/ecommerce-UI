@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
+import AlertModal from '../shared/AlertModal';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -23,6 +24,13 @@ const UserManagement = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [addForm, setAddForm] = useState({ name: '', email: '', password: '', role: 'staff', status: 'active' });
   const [addLoading, setAddLoading] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -76,7 +84,13 @@ const UserManagement = () => {
       fetchUsers();
       closeEditModal();
     } catch {
-      alert('Failed to update user');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to update user',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setEditLoading(false);
     }
@@ -90,7 +104,13 @@ const UserManagement = () => {
       fetchUsers();
       closeEditModal();
     } catch {
-      alert('Failed to delete user');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to delete user',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setDeleteLoading(false);
     }
@@ -112,7 +132,13 @@ const UserManagement = () => {
       fetchUsers();
       closeAddModal();
     } catch {
-      alert('Failed to create user');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to create user',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setAddLoading(false);
     }
@@ -124,6 +150,14 @@ const UserManagement = () => {
 
   return (
     <div className="space-y-6">
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { productsAPI } from '../../services/api';
 import { categoriesAPI } from '../../services/api';
 import API_BASE_URL from '../../services/apiConfig';
+import AlertModal from '../shared/AlertModal';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -40,7 +41,8 @@ const initialProductState = {
   category: '',
   image: '',
   isActive: true,
-  hsn_number: ''
+  hsn_number: '',
+  gst_number: '',
 };
 
 const ProductList = () => {
@@ -67,6 +69,13 @@ const ProductList = () => {
   // Add state for product details modal
   const [showViewModal, setShowViewModal] = useState(false);
   const [viewProduct, setViewProduct] = useState(null);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   useEffect(() => {
     fetchProducts();
@@ -149,16 +158,39 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', addForm.isActive);
       formData.append('hsn_number', addForm.hsn_number);
+      formData.append('gst_number', addForm.gst_number);
       if (addForm.image) formData.append('image', addForm.image);
       if (editProductId) {
         await productsAPI.update(editProductId, formData);
-        alert("Product updated successfully");
+        setAddForm(initialProductState)
+        setEditForm(initialProductState);
+        setShowEditModal(false);
+        setAlertModal({
+          isOpen: true,
+          title: 'Success',
+          message: 'Product updated successfully',
+          type: 'success',
+          onConfirm: () => {
+            setShowAddModal(false);
+            fetchProducts();
+          }
+        });
       } else {
         await productsAPI.create(formData);
-        alert("Product added successfully");
+        setAddForm(initialProductState)
+        setEditForm(initialProductState);
+        setShowEditModal(false);
+        setAlertModal({
+          isOpen: true,
+          title: 'Success',
+          message: 'Product added successfully',
+          type: 'success',
+          onConfirm: () => {
+            setShowAddModal(false);
+            fetchProducts();
+          }
+        });
       }
-      setShowAddModal(false);
-      fetchProducts();
     } catch (err) {
       setAddError('Failed to add product');
     } finally {
@@ -226,11 +258,22 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', editForm.isActive);
       formData.append('hsn_number', editForm.hsn_number);
+      formData.append('gst_number', editForm.gst_number);
       if (editForm.image && typeof editForm.image !== 'string') formData.append('image', editForm.image);
       await productsAPI.update(editProductId, formData);
-      alert("Product updated successfully");
+      setAddForm(initialProductState)
+      setEditForm(initialProductState);
       setShowEditModal(false);
-      fetchProducts();
+      setAlertModal({
+        isOpen: true,
+        title: 'Success',
+        message: 'Product updated successfully',
+        type: 'success',
+        onConfirm: () => {
+          setShowEditModal(false);
+          fetchProducts();
+        }
+      });
     } catch (err) {
       setEditError('Failed to update product');
     } finally {
@@ -271,6 +314,15 @@ const ProductList = () => {
 
   return (
     <div className="space-y-6">
+      {/* AlertModal */}
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       {/* Page Header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -668,6 +720,17 @@ const ProductList = () => {
                         />
                       </div>
                       <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
+                        <input
+                          type="text"
+                          value={addForm.gst_number}
+                          onChange={e => handleAddFormChange('gst_number', e.target.value)}
+                          required
+                          className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                          placeholder="Enter GST number"
+                        />
+                      </div>
+                      <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                         <textarea
                           value={addForm.description}
@@ -804,9 +867,11 @@ const ProductList = () => {
                         <div className="flex-1">
                           <h4 className="font-semibold text-green-900">{addForm.name || 'Product Name'}</h4>
                           <p className="text-sm text-green-700">{addForm.description || 'Product description will appear here'}</p>
-                          <div className="flex items-center gap-4 mt-2">
-                            <span className="text-xl font-bold text-green-600">₹{addForm.price || '0.00'}</span>
-                            <span className="text-sm text-green-700">Stock: {addForm.stock_quantity || '0'} {addForm.unit || 'units'}</span>
+                          <div className="flex items-start flex-col gap-4 mt-2">
+                            <span className="text-sm text-green-700">Stock: {addForm.stock_quantity || '0'}</span>
+                            <span className="text-sm text-green-700">weight:  {addForm.weight || '0'} {addForm.unit || 'units'}</span>
+                            <span className="text-xl font-bold text-green-600"><b>Price: ₹</b>{addForm.price || '0.00'}</span>
+                            <span className="text-sm text-red-600">{addForm.discount_price && addForm.discount_price > 0 ? `Discount Price: ₹${addForm.discount_price}` : 'No discount applied'}</span>
                           </div>
                         </div>
                       </div>
@@ -945,11 +1010,22 @@ const ProductList = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">HSN Code *</label>
                         <input
                           type="text"
-                          value={addForm.hsn}
-                          onChange={e => handleAddFormChange('hsn_number', e.target.value)}
+                          value={editForm.hsn}
+                          onChange={e => handleEditFormChange('hsn', e.target.value)}
                           required
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                           placeholder="Enter HSN code"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
+                        <input
+                          type="text"
+                          value={editForm.gst_number}
+                          onChange={e => handleEditFormChange('gst_number', e.target.value)}
+                          required
+                          className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                          placeholder="Enter GST number"
                         />
                       </div>
                       <div>
@@ -986,19 +1062,6 @@ const ProductList = () => {
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity *</label>
-                        <input
-                          type="number"
-                          min="0"
-                          step="1"
-                          value={editForm.stock_quantity}
-                          onChange={e => handleEditFormChange('stock_quantity', e.target.value)}
-                          required
-                          className="w-full px-4 py-3 text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                          placeholder="0"
-                        />
-                      </div>
-                      <div>
                         <label className="block text-sm font-medium text-red-600 mb-2">Discount Price (Optional)</label>
                         <div className="relative">
                           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">₹</span>
@@ -1013,6 +1076,19 @@ const ProductList = () => {
                           />
                         </div>
                         <p className="text-xs text-gray-500 mt-1">Leave blank or 0 for no discount</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Stock Quantity *</label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="1"
+                          value={editForm.stock_quantity}
+                          onChange={e => handleEditFormChange('stock_quantity', e.target.value)}
+                          required
+                          className="w-full px-4 py-3 text-lg font-semibold border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                          placeholder="0"
+                        />
                       </div>
                     </div>
                   </div>
@@ -1087,11 +1163,13 @@ const ProductList = () => {
                           )}
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-green-900">{editForm.name || 'Product Name'}</h4>
-                          <p className="text-sm text-green-700">{editForm.description || 'Product description will appear here'}</p>
-                          <div className="flex items-center gap-4 mt-2">
-                            <span className="text-xl font-bold text-green-600">₹{editForm.price || '0.00'}</span>
-                            <span className="text-sm text-green-700">Stock: {editForm.stock_quantity || '0'} {editForm.unit || 'units'}</span>
+                          <h4 className="font-semibold text-green-900">{addForm.name || 'Product Name'}</h4>
+                          <p className="text-sm text-green-700">{addForm.description || 'Product description will appear here'}</p>
+                          <div className="flex items-start flex-col gap-4 mt-2">
+                            <span className="text-sm text-green-700">Stock: {addForm.stock_quantity || '0'}</span>
+                            <span className="text-sm text-green-700">weight:  {addForm.weight || '0'} {addForm.unit || 'units'}</span>
+                            <span className="text-xl font-bold text-green-600"><b>Price: ₹</b>{addForm.price || '0.00'}</span>
+                            <span className="text-sm text-red-600">{addForm.discount_price && addForm.discount_price > 0 ? `Discount Price: ₹${addForm.discount_price}` : 'No discount applied'}</span>
                           </div>
                         </div>
                       </div>
@@ -1215,11 +1293,11 @@ const ProductList = () => {
                 <button
                   type="button"
                   className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors font-medium"
-                   onClick={() => setShowEditModal(false)}
+                  onClick={() => setShowEditModal(false)}
                 >
                   Cancel
                 </button>
-                 <button
+                <button
                   type="submit"
                   className="px-8 py-3 bg-green-600 text-white hover:bg-green-700 rounded-lg transition-colors font-medium flex items-center gap-2 text-lg"
                   disabled={editLoading}

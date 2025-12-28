@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { purchaseOrdersAPI } from '../../services/api';
+import AlertModal from '../shared/AlertModal';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -30,6 +31,13 @@ const PurchaseOrders = () => {
   const [submitting, setSubmitting] = useState(false);
   const [modalMode, setModalMode] = useState('create'); // 'create', 'view', 'edit'
   const [selectedPO, setSelectedPO] = useState(null);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   // Calculate total cost from items
   const totalCost = form.items.reduce((sum, item) => sum + (Number(item.quantity) * Number(item.purchase_price)), 0);
@@ -94,7 +102,13 @@ const PurchaseOrders = () => {
       fetchPurchaseOrders();
       closeModal();
     } catch (err) {
-      alert('Failed to delete purchase order');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to delete purchase order',
+        type: 'error',
+        onConfirm: null,
+      });
     }
   };
 
@@ -150,7 +164,13 @@ const PurchaseOrders = () => {
       closeModal();
       fetchPurchaseOrders();
     } catch (err) {
-      alert('Failed to save purchase order');
+      setAlertModal({
+        isOpen: true,
+        title: 'Error',
+        message: 'Failed to save purchase order',
+        type: 'error',
+        onConfirm: null,
+      });
     } finally {
       setSubmitting(false);
     }
@@ -169,6 +189,14 @@ const PurchaseOrders = () => {
 
   return (
     <>
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

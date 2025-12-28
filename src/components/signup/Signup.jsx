@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { authAPI } from "../../services/api";
 import PublicHeader from "../shared/PublicHeader";
 import Footer from "../public/Footer";
+import AlertModal from "../shared/AlertModal";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Signup = () => {
@@ -15,6 +16,13 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'success',
+    onConfirm: null,
+  });
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -51,8 +59,15 @@ const Signup = () => {
       const response = await authAPI.signup(signupData);
 
       if (response.data.success) {
-        alert("Account created successfully! Please sign in to continue.");
-        window.location.href = "/login";
+        setAlertModal({
+          isOpen: true,
+          title: 'Success',
+          message: 'Account created successfully! Please sign in to continue.',
+          type: 'success',
+          onConfirm: () => {
+            window.location.href = "/login";
+          },
+        });
       } else {
         setError("Signup failed - please try again");
       }
@@ -65,6 +80,14 @@ const Signup = () => {
 
   return (
     <div className="public-website">
+      <AlertModal
+        isOpen={alertModal.isOpen}
+        onClose={() => setAlertModal({ ...alertModal, isOpen: false })}
+        title={alertModal.title}
+        message={alertModal.message}
+        type={alertModal.type}
+        onConfirm={alertModal.onConfirm}
+      />
       <PublicHeader />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-green-200 px-4">
         <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
