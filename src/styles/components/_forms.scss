@@ -1,0 +1,1350 @@
+// Forms and Tables Component Styles
+// ================================
+
+// Form Styles
+// ================================
+.form-container {
+  @include card-shadow;
+  padding: $spacing-xl;
+  border-radius: $border-radius-large;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  .form-header {
+    text-align: center;
+    margin-bottom: $spacing-xxl;
+    
+    .form-title {
+      font-size: $font-size-xxl;
+      font-weight: 700;
+      color: $text-primary;
+      margin-bottom: $spacing-sm;
+    }
+    
+    .form-subtitle {
+      color: $text-secondary;
+      font-size: $font-size-md;
+    }
+  }
+  
+  .form-section {
+    margin-bottom: $spacing-xxl;
+    
+    .section-title {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: $spacing-lg;
+      padding-bottom: $spacing-sm;
+      border-bottom: 2px solid $border-light;
+    }
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    
+    @include responsive(md) {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $spacing-md;
+    }
+    
+    @include responsive(sm) {
+      grid-template-columns: 1fr;
+      gap: $spacing-sm;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: $spacing-lg;
+    
+    .form-label {
+      display: block;
+      font-size: $font-size-sm;
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: $spacing-sm;
+      
+      .required {
+        color: $error-color;
+        margin-left: $spacing-xs;
+      }
+    }
+    
+    .form-input {
+      @include input-field;
+      
+      &.error {
+        border-color: $error-color;
+        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+      }
+      
+      &.success {
+        border-color: $success-color;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      }
+    }
+    
+    .form-textarea {
+      @include input-field;
+      min-height: 120px;
+      resize: vertical;
+      font-family: inherit;
+    }
+    
+    .form-select {
+      @include input-field;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right $spacing-sm center;
+      background-repeat: no-repeat;
+      background-size: 16px 12px;
+      padding-right: 40px;
+      appearance: none;
+    }
+    
+    .form-checkbox {
+      @include flex-center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-sm;
+      
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: $primary-color;
+        cursor: pointer;
+      }
+      
+      .checkbox-label {
+        font-size: $font-size-sm;
+        color: $text-primary;
+        cursor: pointer;
+      }
+    }
+    
+    .form-radio {
+      @include flex-center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-sm;
+      
+      input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        accent-color: $primary-color;
+        cursor: pointer;
+      }
+      
+      .radio-label {
+        font-size: $font-size-sm;
+        color: $text-primary;
+        cursor: pointer;
+      }
+    }
+    
+    .error-message {
+      color: $error-color;
+      font-size: $font-size-sm;
+      margin-top: $spacing-xs;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      
+      .error-icon {
+        font-size: 14px;
+      }
+    }
+    
+    .help-text {
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      margin-top: $spacing-xs;
+    }
+  }
+  
+  .form-actions {
+    @include flex-center;
+    gap: $spacing-lg;
+    margin-top: $spacing-xxl;
+    padding-top: $spacing-xl;
+    border-top: 1px solid $border-light;
+    
+    @include responsive(sm) {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+    
+    .btn-primary {
+      @include button-primary;
+      padding: $spacing-md $spacing-xl;
+      font-size: $font-size-md;
+      font-weight: 600;
+    }
+    
+    .btn-secondary {
+      @include button-secondary;
+      padding: $spacing-md $spacing-xl;
+      font-size: $font-size-md;
+      font-weight: 600;
+    }
+    
+    .btn-outline {
+      @include button-outline;
+      padding: $spacing-md $spacing-xl;
+      font-size: $font-size-md;
+      font-weight: 600;
+    }
+  }
+}
+
+// Table Styles
+// ================================
+.table-container {
+  @include card-shadow;
+  border-radius: $border-radius-large;
+  overflow: hidden;
+  
+  .table-header {
+    @include flex-between;
+    padding: $spacing-lg;
+    background: linear-gradient(135deg, $primary-color, $primary-light);
+    color: $text-light;
+    
+    .table-title {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      @include flex-center;
+      gap: $spacing-sm;
+    }
+    
+    .table-actions {
+      @include flex-center;
+      gap: $spacing-sm;
+      
+      .search-box {
+        position: relative;
+        
+        .search-input {
+          padding: $spacing-sm $spacing-md;
+          padding-left: 36px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: $border-radius;
+          background: rgba(255, 255, 255, 0.1);
+          color: $text-light;
+          font-size: $font-size-sm;
+          
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+          }
+          
+          &:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+          }
+        }
+        
+        .search-icon {
+          position: absolute;
+          left: $spacing-sm;
+          top: 50%;
+          transform: translateY(-50%);
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 16px;
+        }
+      }
+      
+      .add-button {
+        @include button-secondary;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+        font-weight: 600;
+        @include flex-center;
+        gap: $spacing-xs;
+      }
+    }
+  }
+  
+  .table-content {
+    overflow-x: auto;
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      
+      .table-head {
+        background: $background-primary;
+        
+        .table-row {
+          th {
+            padding: $spacing-md;
+            text-align: left;
+            font-weight: 600;
+            color: $text-primary;
+            border-bottom: 2px solid $border-color;
+            font-size: $font-size-sm;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            
+            &.sortable {
+              cursor: pointer;
+              transition: color 0.3s ease;
+              @include flex-center;
+              gap: $spacing-xs;
+              
+              &:hover {
+                color: $primary-color;
+              }
+              
+              .sort-icon {
+                font-size: 12px;
+                opacity: 0.5;
+                
+                &.active {
+                  opacity: 1;
+                  color: $primary-color;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .table-body {
+        .table-row {
+          border-bottom: 1px solid $border-light;
+          transition: background-color 0.3s ease;
+          
+          &:hover {
+            background: rgba($primary-color, 0.02);
+          }
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          td {
+            padding: $spacing-md;
+            color: $text-primary;
+            font-size: $font-size-sm;
+            vertical-align: middle;
+            
+            .status-badge {
+              padding: 4px 12px;
+              border-radius: 12px;
+              font-size: $font-size-xs;
+              font-weight: 600;
+              text-transform: uppercase;
+              
+              &.active { background: #e8f5e8; color: #2e7d32; }
+              &.inactive { background: #ffebee; color: #c62828; }
+              &.pending { background: #fff3e0; color: #f57c00; }
+              &.completed { background: #e3f2fd; color: #1976d2; }
+              &.cancelled { background: #fafafa; color: #616161; }
+            }
+            
+            .action-buttons {
+              @include flex-center;
+              gap: $spacing-xs;
+              
+              .action-btn {
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: $border-radius-small;
+                cursor: pointer;
+                @include flex-center;
+                transition: all 0.3s ease;
+                font-size: 14px;
+                
+                &.edit {
+                  background: rgba($info-color, 0.1);
+                  color: $info-color;
+                  
+                  &:hover {
+                    background: $info-color;
+                    color: $text-light;
+                  }
+                }
+                
+                &.delete {
+                  background: rgba($error-color, 0.1);
+                  color: $error-color;
+                  
+                  &:hover {
+                    background: $error-color;
+                    color: $text-light;
+                  }
+                }
+                
+                &.view {
+                  background: rgba($success-color, 0.1);
+                  color: $success-color;
+                  
+                  &:hover {
+                    background: $success-color;
+                    color: $text-light;
+                  }
+                }
+              }
+            }
+            
+            .product-image {
+              width: 50px;
+              height: 50px;
+              border-radius: $border-radius;
+              object-fit: cover;
+              border: 2px solid $border-light;
+            }
+            
+            .product-info {
+              .product-name {
+                font-weight: 600;
+                color: $text-primary;
+                margin-bottom: 4px;
+              }
+              
+              .product-category {
+                font-size: $font-size-xs;
+                color: $text-secondary;
+                text-transform: uppercase;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .table-footer {
+    @include flex-between;
+    padding: $spacing-lg;
+    background: $background-primary;
+    border-top: 1px solid $border-light;
+    
+    .pagination-info {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+    
+    .pagination {
+      @include flex-center;
+      gap: $spacing-xs;
+      
+      .page-btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid $border-color;
+        background: $background-secondary;
+        color: $text-primary;
+        border-radius: $border-radius-small;
+        cursor: pointer;
+        @include flex-center;
+        transition: all 0.3s ease;
+        font-size: $font-size-sm;
+        
+        &:hover {
+          border-color: $primary-color;
+          color: $primary-color;
+        }
+        
+        &.active {
+          background: $primary-color;
+          border-color: $primary-color;
+          color: $text-light;
+        }
+        
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+// Modal Styles
+// ================================
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  @include flex-center;
+  padding: $spacing-md;
+  
+  @include responsive(sm) {
+    padding: $spacing-sm;
+  }
+  
+  .modal-container {
+    background: $background-secondary;
+    border-radius: $border-radius-large;
+    box-shadow: $shadow-heavy;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease-out;
+    
+    @include responsive(md) {
+      max-width: 500px;
+      max-height: 85vh;
+    }
+    
+    @include responsive(sm) {
+      max-width: 95%;
+      max-height: 80vh;
+      margin: $spacing-sm;
+    }
+    
+    .modal-header {
+      @include flex-between;
+      padding: $spacing-lg;
+      border-bottom: 1px solid $border-light;
+      
+      .modal-title {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $text-primary;
+      }
+      
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: $text-secondary;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: $error-color;
+        }
+      }
+    }
+    
+    .modal-body {
+      padding: $spacing-lg;
+      
+      @include responsive(sm) {
+        padding: $spacing-md;
+      }
+      
+      // Tracking link styling
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+        padding: $spacing-xs $spacing-sm;
+        background: rgba($primary-color, 0.1);
+        border-radius: $border-radius-small;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: $primary-color;
+          color: $text-light;
+          text-decoration: none;
+        }
+      }
+    }
+    
+    .modal-footer {
+      @include flex-center;
+      gap: $spacing-md;
+      padding: $spacing-lg;
+      border-top: 1px solid $border-light;
+      
+      .btn-primary {
+        @include button-primary;
+        padding: $spacing-sm $spacing-lg;
+      }
+      
+      .btn-secondary {
+        @include button-outline;
+        padding: $spacing-sm $spacing-lg;
+      }
+    }
+  }
+}
+
+// Order Management Table Styles
+// ================================
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: $spacing-lg;
+  
+  @include responsive(md) {
+    font-size: $font-size-sm;
+  }
+  
+  @include responsive(sm) {
+    font-size: $font-size-xs;
+    margin-top: $spacing-md;
+  }
+  
+  th, td {
+    padding: $spacing-md;
+    text-align: left;
+    border-bottom: 1px solid $border-light;
+    
+    @include responsive(md) {
+      padding: $spacing-sm;
+    }
+    
+    @include responsive(sm) {
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+  
+  th {
+    background: $background-secondary;
+    font-weight: 600;
+    color: $text-primary;
+    
+    @include responsive(sm) {
+      font-size: $font-size-xs;
+    }
+  }
+  
+  td {
+    color: $text-secondary;
+    
+    @include responsive(sm) {
+      font-size: $font-size-xs;
+    }
+    
+    // Tracking link styling in table
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 500;
+      padding: $spacing-xs $spacing-sm;
+      background: rgba($primary-color, 0.1);
+      border-radius: $border-radius-small;
+      transition: all 0.3s ease;
+      
+      @include responsive(sm) {
+        padding: 2px 6px;
+        font-size: $font-size-xs;
+      }
+      
+      &:hover {
+        background: $primary-color;
+        color: $text-light;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// Order Detail Modal Styles
+// ================================
+.order-detail-modal {
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  
+  .modal-header {
+    @include flex-between;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $border-light;
+    
+    h2 {
+      margin: 0;
+      color: $text-primary;
+      font-size: $font-size-lg;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: $text-secondary;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      @include flex-center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: $error-color;
+        color: $text-light;
+      }
+    }
+  }
+  
+  .modal-content {
+    padding: $spacing-lg;
+    
+    > div {
+      margin-bottom: $spacing-md;
+      
+      b {
+        color: $text-primary;
+        font-weight: 600;
+      }
+      
+      // Tracking link styling
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+        padding: $spacing-xs $spacing-sm;
+        background: rgba($primary-color, 0.1);
+        border-radius: $border-radius-small;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: $primary-color;
+          color: $text-light;
+          text-decoration: none;
+        }
+      }
+    }
+    
+    ul {
+      margin: $spacing-sm 0;
+      padding-left: $spacing-lg;
+      
+      li {
+        margin-bottom: $spacing-xs;
+        color: $text-secondary;
+      }
+    }
+  }
+  
+  .modal-actions {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    border-top: 1px solid $border-light;
+    
+    .danger-btn {
+      @include button-danger;
+      padding: $spacing-sm $spacing-lg;
+    }
+    
+    .secondary-btn {
+      @include button-outline;
+      padding: $spacing-sm $spacing-lg;
+    }
+  }
+}
+
+// Alert Styles
+// ================================
+.alert {
+  padding: $spacing-md;
+  border-radius: $border-radius;
+  margin-bottom: $spacing-lg;
+  @include flex-center;
+  gap: $spacing-sm;
+  
+  &.alert-success {
+    background: rgba($success-color, 0.1);
+    border: 1px solid rgba($success-color, 0.3);
+    color: $success-color;
+  }
+  
+  &.alert-error {
+    background: rgba($error-color, 0.1);
+    border: 1px solid rgba($error-color, 0.3);
+    color: $error-color;
+  }
+  
+  &.alert-warning {
+    background: rgba($warning-color, 0.1);
+    border: 1px solid rgba($warning-color, 0.3);
+    color: $warning-color;
+  }
+  
+  &.alert-info {
+    background: rgba($info-color, 0.1);
+    border: 1px solid rgba($info-color, 0.3);
+    color: $info-color;
+  }
+  
+  .alert-icon {
+    font-size: 18px;
+  }
+  
+  .alert-message {
+    flex: 1;
+    font-weight: 500;
+  }
+  
+  .alert-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// Loading Spinner
+// ================================
+.loading-spinner {
+  @include flex-center;
+  padding: $spacing-xxl;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid $border-light;
+    border-top: 4px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  .loading-text {
+    margin-top: $spacing-md;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+}
+
+// Animations
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Responsive Design
+@include responsive(sm) {
+  .form-container {
+    padding: $spacing-lg;
+    margin: $spacing-md;
+  }
+  
+  .table-container {
+    .table-header {
+      flex-direction: column;
+      gap: $spacing-md;
+      align-items: stretch;
+      
+      .table-actions {
+        justify-content: space-between;
+      }
+    }
+    
+    .table-content {
+      .data-table {
+        font-size: $font-size-xs;
+        
+        .table-head th,
+        .table-body td {
+          padding: $spacing-sm;
+        }
+      }
+    }
+    
+    .table-footer {
+      flex-direction: column;
+      gap: $spacing-md;
+      align-items: center;
+    }
+  }
+  
+  .modal-container {
+    margin: $spacing-md;
+    max-height: calc(100vh - 32px);
+  }
+}
+
+// Product list specific styles
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  .product-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .product-details {
+    .product-name {
+      font-weight: 600;
+      color: $text-primary;
+      margin-bottom: 0.25rem;
+    }
+    
+    .product-description {
+      font-size: 0.8rem;
+      color: $text-secondary;
+      line-height: 1.3;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.category-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stock-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  
+  &.in-stock {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+  }
+  
+  &.low-stock {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+  }
+}
+
+.filter-dropdown {
+  .filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    color: $text-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+    
+    &:hover {
+      border-color: $primary-color;
+    }
+  }
+} 
+
+// Delete Category Modal Enhancements
+.delete-category-modal {
+  border: 2px solid #e53935;
+  box-shadow: 0 8px 32px rgba(229, 57, 53, 0.15);
+  background: #fff8f8;
+  animation: modalSlideIn 0.3s ease-out;
+
+  .modal-header {
+    background: #e53935;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    padding: 1.5rem 1rem 1rem 1rem;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .close-btn {
+      color: #fff;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      transition: color 0.2s;
+      &:hover { color: #ffcdd2; }
+    }
+  }
+  .modal-content {
+    padding: 1.5rem 1rem;
+    font-size: 1.1rem;
+    color: #b71c1c;
+    text-align: center;
+    font-weight: 500;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    .danger-btn {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover { background: #b71c1c; }
+    }
+    .secondary-btn {
+      background: #fff;
+      color: #e53935;
+      border: 1px solid #e53935;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      &:hover {
+        background: #e53935;
+        color: #fff;
+      }
+    }
+  }
+} 
+
+// Add/Edit Product Modal Enhancements
+.add-product-modal, .edit-product-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+  max-width: 500px;
+  width: 100%;
+  padding: 0;
+  animation: modalSlideIn 0.3s ease-out;
+
+  .modal-header {
+    background: #1976d2;
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 1.5rem 1rem 1rem 1rem;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .close-btn {
+      color: #fff;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      transition: color 0.2s;
+      &:hover { color: #90caf9; }
+    }
+  }
+  .modal-form {
+    padding: 1.5rem 1rem;
+    .form-group {
+      margin-bottom: 1.25rem;
+      label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+      input, textarea, select {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 1rem;
+        margin-top: 0.25rem;
+        transition: border 0.2s;
+        &:focus {
+          border-color: #1976d2;
+          outline: none;
+        }
+      }
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      .primary-btn {
+        background: #1976d2;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        &:hover { background: #0d47a1; }
+      }
+      .secondary-btn {
+        background: #fff;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+        border-radius: 6px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        &:hover {
+          background: #1976d2;
+          color: #fff;
+        }
+      }
+    }
+  }
+} 
+
+.form-grid-two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+} 
+
+.delete-product-modal {
+  border: 2px solid #e53935;
+  box-shadow: 0 8px 32px rgba(229, 57, 53, 0.15);
+  background: #fff8f8;
+  animation: modalSlideIn 0.3s ease-out;
+
+  .modal-header {
+    background: #e53935;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    padding: 1.5rem 1rem 1rem 1rem;
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .close-btn {
+      color: #fff;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      transition: color 0.2s;
+      &:hover { color: #ffcdd2; }
+    }
+  }
+  .modal-content {
+    padding: 1.5rem 1rem;
+    font-size: 1.1rem;
+    color: #b71c1c;
+    text-align: center;
+    font-weight: 500;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    .danger-btn {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover { background: #b71c1c; }
+    }
+    .secondary-btn {
+      background: #fff;
+      color: #e53935;
+      border: 1px solid #e53935;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      &:hover {
+        background: #e53935;
+        color: #fff;
+      }
+    }
+  }
+} 
+
+// Offline Orders specific styles
+.report-section,
+.add-order-section {
+  background: $background-secondary;
+  border-radius: $border-radius-large;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-light;
+  
+  .section-header {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+    
+    .section-title {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+  
+  .date-range-form {
+    .form-row {
+      @include flex-center;
+      gap: $spacing-lg;
+      margin-bottom: $spacing-lg;
+      
+      @include responsive(sm) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+    
+    .download-buttons {
+      @include flex-center;
+      gap: $spacing-md;
+      flex-wrap: wrap;
+      
+      .btn {
+        min-width: 200px;
+      }
+    }
+  }
+  
+  .add-order-form {
+    .item-row {
+      @include flex-center;
+      gap: $spacing-md;
+      margin-bottom: $spacing-md;
+      
+      @include responsive(sm) {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .form-input {
+        flex: 1;
+      }
+      
+      .btn {
+        min-width: 50px;
+        padding: $spacing-sm;
+      }
+    }
+  }
+}
+
+.view-product-modal, .view-category-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+  max-width: 400px;
+  width: 100%;
+  padding: 0;
+  animation: modalSlideIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .modal-header {
+    width: 100%;
+    background: #1976d2;
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 1.5rem 1rem 1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .close-btn {
+      color: #fff;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      transition: color 0.2s;
+      &:hover { color: #90caf9; }
+    }
+  }
+  .modal-content {
+    width: 100%;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.05rem;
+    color: #333;
+    > div {
+      margin-bottom: 0.7rem;
+      width: 100%;
+      text-align: left;
+    }
+    img {
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+      max-width: 120px;
+      max-height: 120px;
+      display: block;
+    }
+  }
+  .modal-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 0 1.5rem 0;
+    .secondary-btn {
+      background: #fff;
+      color: #1976d2;
+      border: 1px solid #1976d2;
+      border-radius: 6px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      &:hover {
+        background: #1976d2;
+        color: #fff;
+      }
+    }
+  }
+} 

@@ -1,0 +1,578 @@
+// RTQ Foods - Main SCSS Import File
+// ================================
+
+// Import main styles
+// Removed Tailwind directives (not valid in SCSS)
+
+/* index.scss */
+
+@import 'main';
+@import 'components/login';
+@import 'components/public';
+@import 'components/forms';
+@import 'components/dashboard';
+
+:root {
+  --primary-color: #2e7d32;
+  --primary-light: #4caf50;
+  --primary-dark: #1b5e20;
+
+  --secondary-color: #ff6f00;
+  --secondary-light: #ff9800;
+  --secondary-dark: #e65100;
+
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+  --info-color: #2196f3;
+}
+
+// Additional Global Styles
+// ================================
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $background-primary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-color;
+  border-radius: 4px;
+  
+  &:hover {
+    background: $text-secondary;
+  }
+}
+
+// Selection styles
+::selection {
+  background: rgba($primary-color, 0.2);
+  color: $text-primary;
+}
+
+// Focus styles for accessibility
+*:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Button focus styles
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Disable focus outline for mouse users
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .btn-primary,
+  .btn-secondary {
+    border: 2px solid currentColor;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    border-width: 2px;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  
+  .card,
+  .form-container,
+  .table-container {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+} 
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+// .sidebar {
+//   width: 220px !important;
+//   min-width: 200px !important;
+//   background: #ffeb3b !important; /* bright yellow for debug */
+//   border-right: 3px solid #f44336 !important; /* red border for debug */
+//   box-shadow: 2px 0 8px rgba(0,0,0,0.08) !important;
+//   display: block !important;
+//   visibility: visible !important;
+//   position: fixed !important;
+//   left: 0 !important;
+//   top: 0 !important;
+//   bottom: 0 !important;
+//   z-index: 99999 !important;
+//   height: 100vh !important;
+// }
+
+// .sidebar, .sidebar * {
+//   color: #000 !important;
+//   background: transparent !important;
+//   display: block !important;
+//   opacity: 1 !important;
+//   visibility: visible !important;
+//   height: auto !important;
+//   width: auto !important;
+//   font-size: 18px !important;
+//   z-index: 999999 !important;
+//   text-shadow: none !important;
+//   filter: none !important;
+//   box-shadow: none !important;
+//   border: none !important;
+//   outline: none !important;
+//   transform: none !important;
+//   overflow: visible !important;
+// }
+
+// --- Sidebar Styles ---
+.sidebar {
+  display: block !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 64px !important;
+  width: 220px !important;
+  height: calc(100vh - 64px) !important;
+  z-index: 1200 !important;
+  background: #f0f4f8 !important;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04) !important;
+  overflow-y: auto;
+}
+
+.nav-menu {
+  padding: 24px 0;
+}
+
+.nav-section {
+  margin-bottom: 32px;
+}
+
+.nav-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #757575;
+  margin: 0 24px 12px 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px 12px 16px;
+  margin: 8px 10px;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #212121;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border-left: 4px solid transparent;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+}
+
+.nav-item .nav-icon {
+  font-size: 22px;
+}
+
+.nav-item .nav-text {
+  flex: 1;
+}
+
+.nav-item:hover {
+  background: #e6f2ea;
+  color: #2e7d32;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+}
+
+.nav-item.active {
+  background: #e0f7ef;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.12);
+}
+
+.nav-badge {
+  margin-left: auto;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.main-content {
+  margin-left: 220px !important;
+  z-index: 1 !important;
+  position: relative !important;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    min-width: 60px;
+    width: 60px;
+  }
+} 
+
+.form-modal, .category-form, .product-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 32px 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-width: 420px;
+  width: 100%;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.form-modal .form-group, .category-form .form-group, .product-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.form-modal .form-actions, .category-form .form-actions, .product-form .form-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.form-modal .close-btn, .category-form .close-btn, .product-form .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 10002;
+}
+
+.form-modal label, .product-form label, .category-form label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-modal input, .product-form input, .category-form input,
+.form-modal textarea, .product-form textarea, .category-form textarea,
+.form-modal select, .product-form select, .category-form select {
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.2s;
+  background: #fafbfc;
+}
+
+.form-modal input:focus, .product-form input:focus, .category-form input:focus,
+.form-modal textarea:focus, .product-form textarea:focus, .category-form textarea:focus,
+.form-modal select:focus, .product-form select:focus, .category-form select:focus {
+  border: 1.5px solid #1976d2;
+  background: #fff;
+}
+
+.form-modal button, .product-form button, .category-form button {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  background: #1976d2;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.form-modal button.cancel, .product-form button.cancel, .category-form button.cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.form-modal button:hover:not(.cancel), .product-form button:hover:not(.cancel), .category-form button:hover:not(.cancel) {
+  background: #125ea2;
+}
+
+.form-modal .modal-title, .product-form .form-title, .category-form .form-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #1976d2;
+  text-align: center;
+} 
+
+// --- Guaranteed Sidebar Styles ---
+.sidebar {
+  display: block !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 64px !important;
+  width: 220px !important;
+  height: calc(100vh - 64px) !important;
+  z-index: 1200 !important;
+  background: #f0f4f8 !important;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08) !important;
+  overflow-y: auto !important;
+  padding-top: 0 !important;
+  border-radius: 0 12px 12px 0 !important;
+}
+
+.app-bar {
+  z-index: 1300 !important;
+}
+
+.nav-menu {
+  padding: 24px 0 !important;
+}
+
+.nav-section {
+  margin-bottom: 32px !important;
+}
+
+.nav-section-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #757575 !important;
+  margin: 0 24px 12px 24px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.nav-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 0 20px 0 16px !important;
+  margin: 8px 10px !important;
+  background: #fff !important;
+  border-radius: 10px !important;
+  font-size: 16px !important;
+  color: #212121 !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  border-left: 4px solid transparent !important;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s !important;
+  min-height: 48px !important;
+  line-height: 1.2 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.nav-item .nav-icon {
+  font-size: 22px !important;
+}
+
+.nav-item .nav-text {
+  flex: 1 !important;
+}
+
+.nav-item:hover {
+  background: #e6f2ea !important;
+  color: #2e7d32 !important;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.08) !important;
+}
+
+.nav-item.active {
+  background: #e0f7ef !important;
+  color: #2e7d32 !important;
+  border-left: 4px solid #2e7d32 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.12) !important;
+}
+
+.nav-badge {
+  margin-left: auto !important;
+  background: #2e7d32 !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  padding: 2px 8px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+.main-content {
+  margin-left: 220px !important;
+  z-index: 1 !important;
+  position: relative !important;
+} 
+
+@media (min-width: 768px) {
+  .dashboard .sidebar {
+    transform: none !important;
+  }
+} 
+
+// --- Purchase Order Modal Styles ---
+.po-modal-overlay {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 64px);
+  background: rgba(0,0,0,0.25);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 32px;
+}
+.po-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 28px;
+  min-width: 340px;
+  max-width: 95vw;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.po-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  z-index: 1;
+}
+.po-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.po-label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #333;
+}
+.po-input {
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  background: #fafbfc;
+}
+.po-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+.po-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  background: #2e7d32;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.po-btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+} 
+
+.po-items-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.po-items-row .po-input {
+  min-width: 0;
+  flex: 1 1 80px;
+}
+
+@media (max-width: 600px) {
+  .po-modal {
+    max-width: 98vw;
+    padding: 16px 4px;
+  }
+  .po-items-row {
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+  }
+} 
+
+.certificates-image {
+  max-width: 100%;
+  width: auto;
+  height: 50px;
+  margin-top: 16px;
+}

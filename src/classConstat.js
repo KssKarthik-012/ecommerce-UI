@@ -1,0 +1,1 @@
+export const lightgreenbox = "py-16 px-6 bg-gradient-to-br from-green-100 to-green-200 rounded"

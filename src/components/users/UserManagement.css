@@ -1,0 +1,219 @@
+.user-management {
+  max-width: 1000px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 24px 40px 24px;
+}
+
+.user-management h1 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.user-actions input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-right: 12px;
+}
+.user-actions .primary-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.user-actions .primary-btn:hover {
+  background: #125ea2;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  background: #fafbfc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.users-table th, .users-table td {
+  padding: 12px 16px;
+  text-align: left;
+}
+.users-table th {
+  background: #f3f6f9;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+}
+.users-table tr {
+  transition: background 0.15s;
+}
+.users-table tr:hover {
+  background: #f5faff;
+}
+.users-table td {
+  border-bottom: 1px solid #ececec;
+  color: #444;
+}
+.users-table td:last-child {
+  white-space: nowrap;
+}
+.users-table button {
+  margin-right: 8px;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #e3eafc;
+  color: #1976d2;
+  cursor: pointer;
+  font-size: 0.97rem;
+  transition: background 0.2s;
+}
+.users-table button:last-child {
+  margin-right: 0;
+}
+.users-table button:hover {
+  background: #1976d2;
+  color: #fff;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+  padding: 32px 28px 24px 28px;
+  min-width: 340px;
+  max-width: 95vw;
+  width: 400px;
+  position: relative;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.modal-header h2 {
+  font-size: 1.3rem;
+  color: #1976d2;
+  margin: 0;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+  margin-left: 12px;
+}
+.modal-form .form-group {
+  margin-bottom: 16px;
+}
+.modal-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #444;
+  font-weight: 500;
+}
+.modal-form input, .modal-form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #f9f9f9;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.primary-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.primary-btn:hover {
+  background: #125ea2;
+}
+.secondary-btn {
+  background: #e3eafc;
+  color: #1976d2;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.secondary-btn:hover {
+  background: #1976d2;
+  color: #fff;
+}
+.danger-btn {
+  background: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.danger-btn:hover {
+  background: #b71c1c;
+}
+.error {
+  color: #d32f2f;
+  margin: 18px 0 0 0;
+  font-weight: 500;
+  text-align: center;
+}
+.access-denied {
+  color: #d32f2f;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 40px;
+}
+@media (max-width: 600px) {
+  .user-management {
+    padding: 10px 2px 30px 2px;
+  }
+  .modal {
+    padding: 18px 6px 12px 6px;
+    min-width: 90vw;
+  }
+  .users-table th, .users-table td {
+    padding: 8px 6px;
+  }
+} 

@@ -1,0 +1,508 @@
+// Login Component Styles
+// ================================
+
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  @include flex-center;
+  padding: $spacing-md;
+  
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+    background: $background-secondary;
+    border-radius: $border-radius-large;
+    box-shadow: $shadow-heavy;
+    overflow: hidden;
+    animation: slideInUp 0.6s ease-out;
+    
+    @include responsive(sm) {
+      max-width: 450px;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, $primary-color, $primary-light);
+      padding: $spacing-xxl $spacing-xl;
+      text-align: center;
+      color: $text-light;
+      
+      .logo-section {
+        @include flex-center;
+        gap: $spacing-md;
+        margin-bottom: $spacing-lg;
+        
+        .logo-icon {
+          font-size: 48px;
+          color: $text-light;
+        }
+        
+        .logo-text {
+          font-size: $font-size-xxl;
+          font-weight: 700;
+          letter-spacing: 1px;
+        }
+      }
+      
+      .welcome-text {
+        font-size: $font-size-lg;
+        font-weight: 500;
+        margin-bottom: $spacing-sm;
+      }
+      
+      .subtitle {
+        font-size: $font-size-sm;
+        opacity: 0.9;
+        line-height: 1.5;
+      }
+      
+      .home-navigation {
+        margin-top: $spacing-lg;
+        
+        .home-link {
+          display: inline-flex;
+          align-items: center;
+          gap: $spacing-sm;
+          color: $text-light;
+          text-decoration: none;
+          font-size: $font-size-sm;
+          font-weight: 500;
+          padding: $spacing-sm $spacing-md;
+          border-radius: $border-radius-small;
+          transition: all 0.3s ease;
+          opacity: 0.9;
+          
+          &:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-2px);
+          }
+        }
+      }
+    }
+    
+    .login-form {
+      padding: $spacing-xxl $spacing-xl;
+      
+      .form-group {
+        margin-bottom: $spacing-lg;
+        
+        .form-label {
+          display: block;
+          font-size: $font-size-sm;
+          font-weight: 600;
+          color: $text-primary;
+          margin-bottom: $spacing-sm;
+        }
+        
+        .form-input {
+          @include input-field;
+          position: relative;
+          
+          &.error {
+            border-color: $error-color;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+          }
+          
+          &.success {
+            border-color: $success-color;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+          }
+        }
+        
+        .input-wrapper {
+          position: relative;
+          
+          .input-icon {
+            position: absolute;
+            left: $spacing-md;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $text-secondary;
+            font-size: 18px;
+            z-index: 1;
+          }
+          
+          .form-input {
+            padding-left: 48px;
+          }
+          
+          .password-toggle {
+            position: absolute;
+            right: $spacing-md;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: $text-secondary;
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+        
+        .error-message {
+          color: $error-color;
+          font-size: $font-size-sm;
+          margin-top: $spacing-xs;
+          display: flex;
+          align-items: center;
+          gap: $spacing-xs;
+          
+          .error-icon {
+            font-size: 14px;
+          }
+        }
+      }
+      
+      .form-options {
+        @include flex-between;
+        margin-bottom: $spacing-xl;
+        
+        .remember-me {
+          @include flex-center;
+          gap: $spacing-xs;
+          
+          .checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: $primary-color;
+          }
+          
+          .checkbox-label {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            cursor: pointer;
+          }
+        }
+        
+        .forgot-password {
+          font-size: $font-size-sm;
+          color: $primary-color;
+          text-decoration: none;
+          transition: color 0.3s ease;
+          
+          &:hover {
+            color: $primary-light;
+            text-decoration: underline;
+          }
+        }
+      }
+      
+      .login-button {
+        @include button-primary;
+        width: 100%;
+        padding: $spacing-md;
+        font-size: $font-size-md;
+        font-weight: 600;
+        margin-bottom: $spacing-lg;
+        position: relative;
+        overflow: hidden;
+        
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none;
+        }
+        
+        .button-content {
+          @include flex-center;
+          gap: $spacing-sm;
+        }
+        
+        .loading-spinner {
+          width: 20px;
+          height: 20px;
+          border: 2px solid transparent;
+          border-top: 2px solid $text-light;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
+      
+      .divider {
+        @include flex-center;
+        margin: $spacing-xl 0;
+        
+        .divider-line {
+          flex: 1;
+          height: 1px;
+          background: $border-color;
+        }
+        
+        .divider-text {
+          padding: 0 $spacing-md;
+          font-size: $font-size-sm;
+          color: $text-secondary;
+          background: $background-secondary;
+        }
+      }
+      
+      .social-login {
+        .social-button {
+          width: 100%;
+          padding: $spacing-md;
+          border: 2px solid $border-color;
+          border-radius: $border-radius;
+          background: $background-secondary;
+          color: $text-primary;
+          font-size: $font-size-md;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          @include flex-center;
+          gap: $spacing-sm;
+          margin-bottom: $spacing-md;
+          
+          &:hover {
+            border-color: $primary-color;
+            background: rgba($primary-color, 0.05);
+            transform: translateY(-2px);
+            box-shadow: $shadow-light;
+          }
+          
+          .social-icon {
+            font-size: 20px;
+          }
+          
+          &.google {
+            &:hover {
+              border-color: #db4437;
+              background: rgba(219, 68, 55, 0.05);
+            }
+          }
+          
+          &.facebook {
+            &:hover {
+              border-color: #4267B2;
+              background: rgba(66, 103, 178, 0.05);
+            }
+          }
+        }
+      }
+      
+      .signup-link {
+        text-align: center;
+        margin-top: $spacing-xl;
+        
+        .signup-text {
+          font-size: $font-size-sm;
+          color: $text-secondary;
+        }
+        
+        .signup-button {
+          color: $primary-color;
+          font-weight: 600;
+          text-decoration: none;
+          transition: color 0.3s ease;
+          
+          &:hover {
+            color: $primary-light;
+            text-decoration: underline;
+          }
+        }
+        
+        .demo-credentials {
+          margin-top: $spacing-xl;
+          padding: $spacing-lg;
+          background: rgba($primary-color, 0.05);
+          border-radius: $border-radius;
+          border-left: 4px solid $primary-color;
+          
+          p {
+            margin-bottom: $spacing-xs;
+            font-size: $font-size-sm;
+            color: $text-secondary;
+            
+            strong {
+              color: $text-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Alternative Login Layout (Split Screen)
+  &.split-layout {
+    background: none;
+    padding: 0;
+    
+    .login-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      
+      @include responsive(md) {
+        grid-template-columns: 1fr;
+      }
+      
+      .split-left {
+        background: linear-gradient(135deg, $primary-color 0%, $primary-light 50%, $secondary-color 100%);
+        @include flex-center;
+        padding: $spacing-xxl;
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+          opacity: 0.3;
+        }
+        
+        .split-content {
+          text-align: center;
+          color: $text-light;
+          position: relative;
+          z-index: 1;
+          
+          .split-logo {
+            font-size: 64px;
+            margin-bottom: $spacing-xl;
+            animation: pulse 2s infinite;
+          }
+          
+          .split-title {
+            font-size: $font-size-xxl;
+            font-weight: 700;
+            margin-bottom: $spacing-lg;
+            letter-spacing: 1px;
+          }
+          
+          .split-subtitle {
+            font-size: $font-size-lg;
+            margin-bottom: $spacing-xl;
+            opacity: 0.9;
+            line-height: 1.6;
+          }
+          
+          .split-features {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto;
+            
+            .feature-item {
+              @include flex-center;
+              gap: $spacing-md;
+              margin-bottom: $spacing-md;
+              
+              .feature-icon {
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                @include flex-center;
+                font-size: 18px;
+              }
+              
+              .feature-text {
+                font-size: $font-size-sm;
+                opacity: 0.9;
+              }
+            }
+          }
+        }
+      }
+      
+      .split-right {
+        @include flex-center;
+        padding: $spacing-xxl;
+        background: $background-secondary;
+        
+        .login-container {
+          max-width: 400px;
+          width: 100%;
+          box-shadow: none;
+          border: 1px solid $border-color;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@include responsive(sm) {
+  .login-page {
+    padding: $spacing-sm;
+    
+    .login-container {
+      .login-header {
+        padding: $spacing-xl $spacing-lg;
+      }
+      
+      .login-form {
+        padding: $spacing-xl $spacing-lg;
+      }
+    }
+  }
+}
+
+// Dark Theme Support
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    .login-container {
+      background: $background-dark;
+      
+      .login-form {
+        .form-group {
+          .form-label {
+            color: $text-light;
+          }
+          
+          .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: $text-light;
+            
+            &::placeholder {
+              color: rgba(255, 255, 255, 0.5);
+            }
+          }
+        }
+        
+        .form-options {
+          .remember-me .checkbox-label {
+            color: rgba(255, 255, 255, 0.7);
+          }
+        }
+        
+        .divider .divider-line {
+          background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .signup-link .signup-text {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+  }
+} 

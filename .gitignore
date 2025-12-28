@@ -1,0 +1,24 @@
+# dependencies
+/node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# environment files
+.env
+.env.*
+!.env.example
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
