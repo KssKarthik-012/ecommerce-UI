@@ -42,7 +42,7 @@ const initialProductState = {
   image: '',
   isActive: true,
   hsn_number: '',
-  gst_number: '',
+  // gst_number: '',
 };
 
 const ProductList = () => {
@@ -158,7 +158,7 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', addForm.isActive);
       formData.append('hsn_number', addForm.hsn_number);
-      formData.append('gst_number', addForm.gst_number);
+      // formData.append('gst_number', addForm.gst_number);
       if (addForm.image) formData.append('image', addForm.image);
       if (editProductId) {
         await productsAPI.update(editProductId, formData);
@@ -258,7 +258,7 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', editForm.isActive);
       formData.append('hsn_number', editForm.hsn_number);
-      formData.append('gst_number', editForm.gst_number);
+      // formData.append('gst_number', editForm.gst_number);
       if (editForm.image && typeof editForm.image !== 'string') formData.append('image', editForm.image);
       await productsAPI.update(editProductId, formData);
       setAddForm(initialProductState)
@@ -719,7 +719,7 @@ const ProductList = () => {
                           placeholder="Enter HSN code"
                         />
                       </div>
-                      <div>
+                      {/*<div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
                         <input
                           type="text"
@@ -729,7 +729,7 @@ const ProductList = () => {
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                           placeholder="Enter GST number"
                         />
-                      </div>
+                      </div> */}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                         <textarea
@@ -1017,7 +1017,7 @@ const ProductList = () => {
                           placeholder="Enter HSN code"
                         />
                       </div>
-                      <div>
+                      {/* <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
                         <input
                           type="text"
@@ -1027,7 +1027,7 @@ const ProductList = () => {
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                           placeholder="Enter GST number"
                         />
-                      </div>
+                      </div> */}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                         <textarea
