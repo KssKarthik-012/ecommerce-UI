@@ -392,6 +392,8 @@ const ProductList = () => {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-red-600 uppercase tracking-wider">Discount</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600  uppercase tracking-wider">HSN Code</th>
+                {/* <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600  uppercase tracking-wider">GST No</th> */}
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Stock</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
@@ -553,9 +555,19 @@ const ProductList = () => {
                         <div className="text-xs text-gray-500">Save: ₹{(product.price - product.discount_price).toFixed(2)}</div>
                       </div>
                     ) : (
-                      <span className="text-gray-400">No discount</span>
+                      <span className="text-gray-400">-</span>
                     )}
                   </td>
+                  <td className="px-6 py-4 w-[112px]">
+                    {product.hsn_number ? (
+                      <div className="text-gray-900 text-sm font-medium">{product.hsn_number}</div> 
+                    ) : (<span className="text-gray-400">-</span>)}
+                  </td>
+                  {/* <td className="px-6 py-4">
+                    {product.gst_number ? (
+                      <div className="text-gray-900 text-sm font-medium">{product.gst_number}</div> 
+                    ) : (<span className="text-gray-400">-</span>)}
+                  </td> */}
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${product.stock_quantity > 10
                       ? 'bg-green-100 text-green-800'
@@ -584,9 +596,9 @@ const ProductList = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center ">
                       <button
-                        className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-1 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="View"
                         onClick={() => { setViewProduct(product); setShowViewModal(true); }}
                       >
@@ -595,14 +607,14 @@ const ProductList = () => {
                       {(userRole === 'admin' || userRole === 'staff') && (
                         <>
                           <button
-                            className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                            className="p-1 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                             title="Edit"
                             onClick={() => handleEditProduct(product)}
                           >
                             <EditIcon className="w-4 h-4" />
                           </button>
                           <button
-                            className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-1 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Delete"
                             onClick={() => handleDeleteProduct(product._id)}
                           >

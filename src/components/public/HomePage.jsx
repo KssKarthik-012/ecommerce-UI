@@ -205,7 +205,7 @@ const HomePage = () => {
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon"><img src={organic} alt="Organic icon" />
-</div>
+              </div>
               <h3 className="feature-title">100% Organic</h3>
               <p className="feature-description">
                 All our products are certified organic, grown without harmful pesticides and chemicals.
@@ -308,9 +308,9 @@ const HomePage = () => {
                           src={process.env.REACT_APP_API_URL + product.image_url}
                           alt={product.name}
                           className="w-full h-auto object-cover object-center"
-                          // onError={(e) => {
-                          //   e.currentTarget.src = "/images/no-image.png"; // fallback if broken
-                          // }}
+                        // onError={(e) => {
+                        //   e.currentTarget.src = "/images/no-image.png"; // fallback if broken
+                        // }}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm font-medium">
@@ -334,6 +334,9 @@ const HomePage = () => {
                         </p>
                       </div>
 
+                      <p className='text-[12px] mb-1 leading-[20px]'>
+                        <b className='text-green-800'>GST No:</b> <span className="font-medium">33AAOCR1538H1ZB</span>
+                      </p>
                       <h3 className="text-lg font-semibold text-gray-800 line-clamp-1 mb-0">
                         {product.name}
                       </h3>

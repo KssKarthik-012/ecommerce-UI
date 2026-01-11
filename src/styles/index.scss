@@ -43,7 +43,7 @@
 ::-webkit-scrollbar-thumb {
   background: $border-color;
   border-radius: 4px;
-  
+
   &:hover {
     background: $text-secondary;
   }
@@ -77,11 +77,12 @@ textarea:focus {
 
 // High contrast mode support
 @media (prefers-contrast: high) {
+
   .btn-primary,
   .btn-secondary {
     border: 2px solid currentColor;
   }
-  
+
   .form-input,
   .form-select,
   .form-textarea {
@@ -91,6 +92,7 @@ textarea:focus {
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -105,28 +107,37 @@ textarea:focus {
   .no-print {
     display: none !important;
   }
-  
+
   .print-only {
     display: block !important;
   }
-  
+
   body {
     background: white !important;
     color: black !important;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
   }
-  
+
+  * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+
   .container {
     max-width: none !important;
     padding: 0 !important;
   }
-  
+
   .card,
   .form-container,
   .table-container {
     box-shadow: none !important;
     border: 1px solid #ccc !important;
   }
-} 
+}
 
 .dashboard-layout {
   display: flex;
@@ -178,7 +189,7 @@ textarea:focus {
   height: calc(100vh - 64px) !important;
   z-index: 1200 !important;
   background: #f0f4f8 !important;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.04) !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04) !important;
   overflow-y: auto;
 }
 
@@ -211,7 +222,7 @@ textarea:focus {
   color: #212121;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   border-left: 4px solid transparent;
   transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
 }
@@ -227,7 +238,7 @@ textarea:focus {
 .nav-item:hover {
   background: #e6f2ea;
   color: #2e7d32;
-  box-shadow: 0 2px 8px rgba(46,125,50,0.08);
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.08);
 }
 
 .nav-item.active {
@@ -235,7 +246,7 @@ textarea:focus {
   color: #2e7d32;
   border-left: 4px solid #2e7d32;
   font-weight: 700;
-  box-shadow: 0 2px 12px rgba(46,125,50,0.12);
+  box-shadow: 0 2px 12px rgba(46, 125, 50, 0.12);
 }
 
 .nav-badge {
@@ -259,9 +270,11 @@ textarea:focus {
     min-width: 60px;
     width: 60px;
   }
-} 
+}
 
-.form-modal, .category-form, .product-form {
+.form-modal,
+.category-form,
+.product-form {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -269,7 +282,7 @@ textarea:focus {
   background: #fff;
   padding: 32px 28px;
   border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   max-width: 420px;
   width: 100%;
   z-index: 10001;
@@ -279,21 +292,27 @@ textarea:focus {
   align-items: stretch;
 }
 
-.form-modal .form-group, .category-form .form-group, .product-form .form-group {
+.form-modal .form-group,
+.category-form .form-group,
+.product-form .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.form-modal .form-actions, .category-form .form-actions, .product-form .form-actions {
+.form-modal .form-actions,
+.category-form .form-actions,
+.product-form .form-actions {
   display: flex;
   gap: 14px;
   justify-content: flex-end;
   margin-top: 18px;
 }
 
-.form-modal .close-btn, .category-form .close-btn, .product-form .close-btn {
+.form-modal .close-btn,
+.category-form .close-btn,
+.product-form .close-btn {
   position: absolute;
   top: 12px;
   right: 16px;
@@ -305,15 +324,23 @@ textarea:focus {
   z-index: 10002;
 }
 
-.form-modal label, .product-form label, .category-form label {
+.form-modal label,
+.product-form label,
+.category-form label {
   font-weight: 500;
   margin-bottom: 6px;
   color: #333;
 }
 
-.form-modal input, .product-form input, .category-form input,
-.form-modal textarea, .product-form textarea, .category-form textarea,
-.form-modal select, .product-form select, .category-form select {
+.form-modal input,
+.product-form input,
+.category-form input,
+.form-modal textarea,
+.product-form textarea,
+.category-form textarea,
+.form-modal select,
+.product-form select,
+.category-form select {
   padding: 10px 12px;
   border: 1px solid #d0d0d0;
   border-radius: 6px;
@@ -323,14 +350,22 @@ textarea:focus {
   background: #fafbfc;
 }
 
-.form-modal input:focus, .product-form input:focus, .category-form input:focus,
-.form-modal textarea:focus, .product-form textarea:focus, .category-form textarea:focus,
-.form-modal select:focus, .product-form select:focus, .category-form select:focus {
+.form-modal input:focus,
+.product-form input:focus,
+.category-form input:focus,
+.form-modal textarea:focus,
+.product-form textarea:focus,
+.category-form textarea:focus,
+.form-modal select:focus,
+.product-form select:focus,
+.category-form select:focus {
   border: 1.5px solid #1976d2;
   background: #fff;
 }
 
-.form-modal button, .product-form button, .category-form button {
+.form-modal button,
+.product-form button,
+.category-form button {
   padding: 8px 20px;
   border-radius: 6px;
   border: none;
@@ -342,22 +377,28 @@ textarea:focus {
   transition: background 0.2s;
 }
 
-.form-modal button.cancel, .product-form button.cancel, .category-form button.cancel {
+.form-modal button.cancel,
+.product-form button.cancel,
+.category-form button.cancel {
   background: #e0e0e0;
   color: #333;
 }
 
-.form-modal button:hover:not(.cancel), .product-form button:hover:not(.cancel), .category-form button:hover:not(.cancel) {
+.form-modal button:hover:not(.cancel),
+.product-form button:hover:not(.cancel),
+.category-form button:hover:not(.cancel) {
   background: #125ea2;
 }
 
-.form-modal .modal-title, .product-form .form-title, .category-form .form-title {
+.form-modal .modal-title,
+.product-form .form-title,
+.category-form .form-title {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 12px;
   color: #1976d2;
   text-align: center;
-} 
+}
 
 // --- Guaranteed Sidebar Styles ---
 .sidebar {
@@ -369,7 +410,7 @@ textarea:focus {
   height: calc(100vh - 64px) !important;
   z-index: 1200 !important;
   background: #f0f4f8 !important;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.08) !important;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08) !important;
   overflow-y: auto !important;
   padding-top: 0 !important;
   border-radius: 0 12px 12px 0 !important;
@@ -408,7 +449,7 @@ textarea:focus {
   color: #212121 !important;
   font-weight: 500 !important;
   cursor: pointer !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
   border-left: 4px solid transparent !important;
   transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s !important;
   min-height: 48px !important;
@@ -428,7 +469,7 @@ textarea:focus {
 .nav-item:hover {
   background: #e6f2ea !important;
   color: #2e7d32 !important;
-  box-shadow: 0 2px 8px rgba(46,125,50,0.08) !important;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.08) !important;
 }
 
 .nav-item.active {
@@ -436,7 +477,7 @@ textarea:focus {
   color: #2e7d32 !important;
   border-left: 4px solid #2e7d32 !important;
   font-weight: 700 !important;
-  box-shadow: 0 2px 12px rgba(46,125,50,0.12) !important;
+  box-shadow: 0 2px 12px rgba(46, 125, 50, 0.12) !important;
 }
 
 .nav-badge {
@@ -453,13 +494,13 @@ textarea:focus {
   margin-left: 220px !important;
   z-index: 1 !important;
   position: relative !important;
-} 
+}
 
 @media (min-width: 768px) {
   .dashboard .sidebar {
     transform: none !important;
   }
-} 
+}
 
 // --- Purchase Order Modal Styles ---
 .po-modal-overlay {
@@ -468,17 +509,18 @@ textarea:focus {
   left: 0;
   right: 0;
   height: calc(100vh - 64px);
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   z-index: 2000;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding-top: 32px;
 }
+
 .po-modal {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   padding: 32px 28px;
   min-width: 340px;
   max-width: 95vw;
@@ -504,17 +546,20 @@ textarea:focus {
   cursor: pointer;
   z-index: 1;
 }
+
 .po-form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 12px;
 }
+
 .po-label {
   font-weight: 500;
   margin-bottom: 4px;
   color: #333;
 }
+
 .po-input {
   padding: 10px 12px;
   border: 1px solid #d0d0d0;
@@ -523,12 +568,14 @@ textarea:focus {
   outline: none;
   background: #fafbfc;
 }
+
 .po-actions {
   display: flex;
   gap: 14px;
   justify-content: flex-end;
   margin-top: 18px;
 }
+
 .po-btn {
   padding: 8px 20px;
   border-radius: 6px;
@@ -540,10 +587,11 @@ textarea:focus {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .po-btn-cancel {
   background: #e0e0e0;
   color: #333;
-} 
+}
 
 .po-items-row {
   display: flex;
@@ -563,12 +611,13 @@ textarea:focus {
     max-width: 98vw;
     padding: 16px 4px;
   }
+
   .po-items-row {
     flex-direction: column;
     gap: 4px;
     align-items: stretch;
   }
-} 
+}
 
 .certificates-image {
   max-width: 100%;

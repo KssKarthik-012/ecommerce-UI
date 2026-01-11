@@ -11,6 +11,7 @@ import {
   Assignment as PurchaseOrdersIcon,
   Person as UsersIcon,
   Assessment as ReportsIcon,
+  Feedback as EnquiriesIcon,
   Logout as LogoutIcon,
   Notifications as NotificationsIcon,
   AccountCircle as AccountIcon,
@@ -73,6 +74,7 @@ const DashboardLayout = ({ children }) => {
         { path: '/admin/offline-orders', icon: OrdersIcon, label: 'Offline Orders' },
         { path: '/admin/customers', icon: CustomersIcon, label: 'Customers' },
         { path: '/admin/categories', icon: CategoriesIcon, label: 'Categories' },
+        { path: '/admin/enquiries', icon: EnquiriesIcon, label: 'Enquiries' },
         { path: '/admin/purchase-orders', icon: PurchaseOrdersIcon, label: 'Purchase Orders' },
         { path: '/admin/users', icon: UsersIcon, label: 'User Management' }
       ]

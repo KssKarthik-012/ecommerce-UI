@@ -244,6 +244,9 @@ const ShopPage = () => {
                           <b className='text-green-800'>HSN Code:</b> <span className="font-medium">{product.hsn_number || "N/A"}</span>
                         </p>
                       </div>
+                      <p className='text-[12px] mb-1 leading-[20px]'>
+                        <b className='text-green-800'>GST No:</b> <span className="font-medium">33AAOCR1538H1ZB</span>
+                      </p>
                       <h3 className="text-lg font-semibold text-gray-800 line-clamp-1 mb-0">
                         {product.name}
                       </h3>

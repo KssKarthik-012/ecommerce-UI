@@ -145,15 +145,15 @@ const CustomerDashboard = () => {
         <section className={`shop-section ${lightgreenbox}`}>
           {/* Header */}
           <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-              Dashboard Overview
+            <h1 className="text-4xl md:text-4xl font-bold text-gray-900 mb-3">
+              Hi, {user?.name || 'Customer'}!
             </h1>
-            <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
+            {/* <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
               Discover our premium organic food products and spices
-            </p>
+            </p> */}
           </div>
           <div className="w-full flex flex-wrap justify-center gap-4">
-            <button
+            {/* <button
               className="w-inherit rounded-full px-6 py-3 bg-green-600 text-white hover:bg-green-700 transition"
               onClick={() => handleTabChange('overview')}
             >
@@ -161,7 +161,7 @@ const CustomerDashboard = () => {
             </button>
             <button onClick={() => navigate('/shop')} className="w-inherit rounded-full px-6 py-3 bg-green-600 text-white hover:bg-green-700 transition">
               <SearchIcon /> Browse Products
-            </button>
+            </button> */}
             <button onClick={() => handleTabChange('orders')} className="w-inherit rounded-full px-6 py-3 bg-green-600 text-white hover:bg-green-700 transition">
               <ViewInArIcon /> View Orders
             </button>

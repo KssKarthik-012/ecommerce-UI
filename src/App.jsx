@@ -27,6 +27,7 @@ import OrderManagement from './components/orders/OrderManagement';
 import OfflineOrders from './components/orders/OfflineOrders';
 import UserManagement from './components/users/UserManagement';
 import DashboardHome from './components/dashboard/DashboardHome';
+import Enquiries from './components/dashboard/Enquiries';
 
 // Public pages
 import HomePage from './components/public/HomePage';
@@ -146,7 +147,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div className="App">
+        <div className="App" contentEditable={false}>
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
@@ -188,6 +189,7 @@ function App() {
               <Route path="purchase-orders" element={<PurchaseOrders />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="enquiries" element={<Enquiries />} />
             </Route>
             {/* Access Denied Route */}
             <Route path="/access-denied" element={<AccessDenied />} />

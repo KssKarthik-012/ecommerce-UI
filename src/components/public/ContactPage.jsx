@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PublicHeader from '../shared/PublicHeader';
 import Footer from './Footer';
-import { MapPin, Phone, Mail, Instagram, Headset, Clock, User, AtSign, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Instagram, Headset, Clock, User, AtSign, MessageSquare, ChevronDown  } from 'lucide-react';
+import API_BASE_URL from '../../services/apiConfig';
 
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ const ContactPage = () => {
     };
 
     try {
-      const res = await fetch('/api/static-pages/contact', {
+      const res = await fetch(`${API_BASE_URL}/static-pages/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -102,8 +103,7 @@ const ContactPage = () => {
                       <Mail className="text-green-700" />
                       <div>
                         <p className="font-semibold text-gray-900">Email</p>
-                        <a href="mailto:support@riyathirstquenchers.com" className="block text-sm text-gray-700 hover:text-green-700">support@riyathirstquenchers.com</a>
-                        <a href="mailto:riyathirstquenchers@gmail.com" className="block text-sm text-gray-700 hover:text-green-700">riyathirstquenchers@gmail.com</a>
+                        <a className="block text-sm text-gray-700 hover:text-green-700" href="md@rtqfoods.com">md@rtqfoods.com</a>
                       </div>
                     </div>
                   </div>
@@ -248,12 +248,12 @@ const ContactPage = () => {
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a
                   href="tel:+919884198858"
-                  className="inline-flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 text-white text-sm font-medium justify-center"
+                  className="inline-flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 !text-white text-sm font-medium justify-center"
                 >
                   <Phone size={16} /> Call us
                 </a>
                 <a
-                  href="mailto:support@riyathirstquenchers.com"
+                  href="mailto:md@rtqfoods.com"
                   className="inline-flex items-center gap-2 rounded-full bg-white border border-green-700 text-green-700 px-5 py-2.5 text-sm font-medium justify-center"
                 >
                   <Mail size={16} /> Email us
@@ -263,14 +263,14 @@ const ContactPage = () => {
                 <details className="group">
                   <summary className="cursor-pointer list-none flex items-center justify-between">
                     <span className="font-medium text-gray-900">Do you offer bulk/wholesale orders?</span>
-                    <span className="text-green-700 group-open:rotate-180 transition">⌄</span>
+                    <span className="text-green-700 group-open:rotate-180 transition"><ChevronDown size={16} /></span>
                   </summary>
                   <p className="mt-2 text-sm text-gray-600">Yes. Share your requirements via the form, and our team will contact you.</p>
                 </details>
                 <details className="group mt-3">
                   <summary className="cursor-pointer list-none flex items-center justify-between">
                     <span className="font-medium text-gray-900">How long does delivery take?</span>
-                    <span className="text-green-700 group-open:rotate-180 transition">⌄</span>
+                    <span className="text-green-700 group-open:rotate-180 transition"><ChevronDown size={16} /></span>
                   </summary>
                   <p className="mt-2 text-sm text-gray-600">Typically 2–3 working days within South India.</p>
                 </details>
@@ -302,8 +302,6 @@ const ContactPage = () => {
                     <Mail className="text-green-700 mt-0" />
                     <div className="space-y-1">
                       <a className="block text-gray-700 hover:text-green-700" href="md@rtqfoods.com">md@rtqfoods.com</a>
-                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:support@riyathirstquenchers.com">support@riyathirstquenchers.com</a> */}
-                      {/* <a className="block text-gray-700 hover:text-green-700" href="mailto:riyathirstquenchers@gmail.com">riyathirstquenchers@gmail.com</a> */}
                     </div>
                   </div>
                 </div>
