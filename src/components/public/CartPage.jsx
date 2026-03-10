@@ -13,10 +13,10 @@ const CartPage = () => {
 
   // Calculate cart totals
   const selectedItems = cartItems.filter(item => item.selected);
-  const subtotal = selectedItems.reduce((sum, item) => sum + ((item.discount_price || item.price) * (item.quantity || 1)), 0);
+  const subtotal = selectedItems.reduce((sum, item) => sum + (((item.discount_price || item.price) * (item.quantity || 1)) + (((item.discount_price || item.price) * (item.quantity || 1)) * (item.gst_percentage || 0)) / 100), 0);
   const tax = subtotal * 0.05; // 5% tax
   const shipping = subtotal > 0 ? 50 : 0; // Flat rate shipping
-  const total = subtotal + tax + shipping;
+  const total = subtotal + shipping;
   const selectedCount = selectedItems.length;
   const allSelected = cartItems.length > 0 && cartItems.every(item => item.selected);
   const [customerName, setCustomerName] = useState('');
@@ -102,7 +102,10 @@ const CartPage = () => {
                 </div>
 
                 <div className="divide-y divide-gray-100">
-                  {cartItems.map((item) => (
+                  {cartItems.map((item) => 
+                  {
+                    const gst_amount = (((item.discount_price || item.price) * (item.quantity || 1)) * (item.gst_percentage || 0)) / 100;
+                    return (
                     <div
                       key={item._id}
                       className={`p-4 hover:bg-gray-50 transition-colors ${!item.selected ? 'opacity-70' : ''}`}
@@ -182,8 +185,10 @@ const CartPage = () => {
 
                           <div className="sm:col-span-2 text-right">
                             <p className="text-sm font-medium text-gray-500 mb-1">Total</p>
+                            <p className='text-[12px] mb-0'>Price: ₹{((item.discount_price || item.price) * (item.quantity || 1)).toFixed(2)}</p>
+                            <p className='text-[12px] mb-0'>GST ({item.gst_percentage || 0}%): ₹{gst_amount.toFixed(2)}</p>
                             <p className="text-green-600 font-semibold">
-                              ₹{((item.discount_price || item.price) * (item.quantity || 1)).toFixed(2)}
+                              ₹{(((item.discount_price || item.price) * (item.quantity || 1)) + gst_amount).toFixed(2)}
                             </p>
                             <button
                               onClick={() => dispatch(removeFromCart(item._id))}
@@ -196,7 +201,8 @@ const CartPage = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )
+                  })}
                 </div>
               </div>
             </div>
@@ -214,10 +220,10 @@ const CartPage = () => {
                     <span className="text-gray-600">Shipping</span>
                     <span className="font-medium">{shipping > 0 ? `₹${shipping.toFixed(2)}` : 'Free'}</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span className="text-gray-600">Tax (5%)</span>
                     <span className="font-medium">₹{tax.toFixed(2)}</span>
-                  </div>
+                  </div> */}
                   <div className="border-t border-gray-200 my-3"></div>
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>

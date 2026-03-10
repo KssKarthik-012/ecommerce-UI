@@ -42,7 +42,7 @@ const initialProductState = {
   image: '',
   isActive: true,
   hsn_number: '',
-  // gst_number: '',
+  gst_percentage: null,
 };
 
 const ProductList = () => {
@@ -158,7 +158,7 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', addForm.isActive);
       formData.append('hsn_number', addForm.hsn_number);
-      // formData.append('gst_number', addForm.gst_number);
+      formData.append('gst_percentage', addForm.gst_percentage);
       if (addForm.image) formData.append('image', addForm.image);
       if (editProductId) {
         await productsAPI.update(editProductId, formData);
@@ -180,6 +180,7 @@ const ProductList = () => {
         setAddForm(initialProductState)
         setEditForm(initialProductState);
         setShowEditModal(false);
+        setShowAddModal(false);
         setAlertModal({
           isOpen: true,
           title: 'Success',
@@ -200,6 +201,7 @@ const ProductList = () => {
 
   // Edit Product
   const handleEditProduct = (product) => {
+    console.log('Editing product:', product);
     setEditProductId(product._id);
     setEditForm({
       name: product.name || '',
@@ -213,6 +215,7 @@ const ProductList = () => {
       image: product.image || '',
       isActive: product.isActive !== false,
       hsn_number: product.hsn_number || '',
+      gst_percentage: product.gst_percentage || null
     });
     setAddForm({
       name: product.name || '',
@@ -225,7 +228,8 @@ const ProductList = () => {
       category: product.category_id || '',
       image: product.image || '',
       isActive: product.isActive !== false,
-      hsn_number: product.hsn_number || ''
+      hsn_number: product.hsn_number || '',
+      gst_percentage: product.gst_percentage || null
     })
     setEditError('');
     // setShowEditModal(true);
@@ -258,7 +262,7 @@ const ProductList = () => {
       formData.append('product_type', 'Online');
       formData.append('visible', editForm.isActive);
       formData.append('hsn_number', editForm.hsn_number);
-      // formData.append('gst_number', editForm.gst_number);
+      formData.append('gst_percentage', editForm.gst_percentage);
       if (editForm.image && typeof editForm.image !== 'string') formData.append('image', editForm.image);
       await productsAPI.update(editProductId, formData);
       setAddForm(initialProductState)
@@ -393,7 +397,7 @@ const ProductList = () => {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Price</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-red-600 uppercase tracking-wider">Discount</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600  uppercase tracking-wider">HSN Code</th>
-                {/* <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600  uppercase tracking-wider">GST No</th> */}
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600  uppercase tracking-wider">GST Percentage</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Stock</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
@@ -563,11 +567,11 @@ const ProductList = () => {
                       <div className="text-gray-900 text-sm font-medium">{product.hsn_number}</div> 
                     ) : (<span className="text-gray-400">-</span>)}
                   </td>
-                  {/* <td className="px-6 py-4">
-                    {product.gst_number ? (
-                      <div className="text-gray-900 text-sm font-medium">{product.gst_number}</div> 
+                  <td className="px-6 py-4">
+                    {product.gst_percentage ? (
+                      <div className="text-gray-900 text-sm font-medium">{product.gst_percentage}%</div> 
                     ) : (<span className="text-gray-400">-</span>)}
-                  </td> */}
+                  </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${product.stock_quantity > 10
                       ? 'bg-green-100 text-green-800'
@@ -724,24 +728,24 @@ const ProductList = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">HSN Code *</label>
                         <input
                           type="text"
-                          value={addForm.hsn}
+                          value={addForm.hsn_number}
                           onChange={e => handleAddFormChange('hsn_number', e.target.value)}
                           required
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                           placeholder="Enter HSN code"
                         />
                       </div>
-                      {/*<div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">GST Percentage *</label>
                         <input
-                          type="text"
-                          value={addForm.gst_number}
-                          onChange={e => handleAddFormChange('gst_number', e.target.value)}
+                          type="number"
+                          value={addForm.gst_percentage}
+                          onChange={e => handleAddFormChange('gst_percentage', e.target.value)}
                           required
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                          placeholder="Enter GST number"
+                          placeholder="Enter GST percentage"
                         />
-                      </div> */}
+                      </div> 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                         <textarea
@@ -1022,24 +1026,24 @@ const ProductList = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">HSN Code *</label>
                         <input
                           type="text"
-                          value={editForm.hsn}
+                          value={editForm.hsn_number}
                           onChange={e => handleEditFormChange('hsn', e.target.value)}
                           required
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
                           placeholder="Enter HSN code"
                         />
                       </div>
-                      {/* <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">GST No *</label>
+                       <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">GST Percentage *</label>
                         <input
-                          type="text"
-                          value={editForm.gst_number}
-                          onChange={e => handleEditFormChange('gst_number', e.target.value)}
+                          type="number"
+                          value={editForm.gst_percentage}
+                          onChange={e => handleEditFormChange('gst_percentage', e.target.value)}
                           required
                           className="w-full px-4 py-3 text-lg font-medium border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                          placeholder="Enter GST number"
+                          placeholder="Enter GST percentage"
                         />
-                      </div> */}
+                      </div> 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                         <textarea

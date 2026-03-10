@@ -73,7 +73,7 @@ const CheckoutPage = () => {
 
   // Get selected items from navigation state or fallback to all cart items
   const selectedItems = location.state?.selectedItems || [];
-  const orderAmount = selectedItems.reduce((sum, item) => sum + ((item.discount_price || item.price) * (item.quantity || 1)), 0);
+  const orderAmount = selectedItems.reduce((sum, item) => sum + (((item.discount_price || item.price) * (item.quantity || 1)) + (((item.discount_price || item.price) * (item.quantity || 1)) * (item.gst_percentage || 0)) / 100), 0);
   const totalWeight = getTotalWeight(selectedItems);
   const finalAmount = orderAmount + deliveryCharge;
 
@@ -246,20 +246,24 @@ const CheckoutPage = () => {
             <div className="checkout-summary">
               <h3>Order Summary</h3>
               <div className="selected-items">
-                {selectedItems.map((item, index) => (
+                {selectedItems.map((item, index) => 
+                {
+                  const gst_amount = (((item.discount_price || item.price) * (item.quantity || 1)) * (item.gst_percentage || 0)) / 100;
+                  return(
                   <div key={index} className="checkout-item">
                     <span className="item-name">{item.name}</span>
                     <span className="item-quantity">x{item.quantity || 1}</span>
                     {item.discount_price && item.discount_price > 0 ? (
                       <div className="item-price-section">
                         <span className="item-original-price" style={{ textDecoration: 'line-through' }}>₹{(item.price * (item.quantity || 1)).toFixed(2)}</span>
-                        <span className="item-price">₹{((item.discount_price || item.price) * (item.quantity || 1)).toFixed(2)}</span>
+                        <span className="item-price">₹{(((item.discount_price || item.price) * (item.quantity || 1)) + gst_amount).toFixed(2)}</span>
                       </div>
                     ) : (
-                      <span className="item-price">₹{(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                      <span className="item-price">₹{((item.price * (item.quantity || 1)) + gst_amount).toFixed(2)}</span>
                     )}
                   </div>
-                ))}
+                )}
+                )}
               </div>
               <div className="order-total">
                 <div>Subtotal: ₹{orderAmount.toFixed(2)}</div>

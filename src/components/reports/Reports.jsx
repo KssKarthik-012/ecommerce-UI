@@ -58,6 +58,12 @@ const Reports = () => {
     type: 'success',
     onConfirm: null,
   });
+  const [dateFilterModal, setDateFilterModal] = useState({
+    isOpen: false,
+    startDate: '',
+    endDate: '',
+    reportType: '', // 'sales' or 'inventory'
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -75,6 +81,72 @@ const Reports = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleExportClick = (reportType) => {
+    setDateFilterModal({
+      isOpen: true,
+      startDate: '',
+      endDate: '',
+      reportType,
+    });
+  };
+
+  const handleDateFilterSubmit = async () => {
+    const { startDate, endDate, reportType } = dateFilterModal;
+
+    if (!startDate || !endDate) {
+      setAlertModal({
+        isOpen: true,
+        title: 'Validation Error',
+        message: 'Please select both start date and end date',
+        type: 'error',
+        onConfirm: null,
+      });
+      return;
+    }
+
+    if (new Date(startDate) > new Date(endDate)) {
+      setAlertModal({
+        isOpen: true,
+        title: 'Validation Error',
+        message: 'Start date must be before end date',
+        type: 'error',
+        onConfirm: null,
+      });
+      return;
+    }
+
+    // Download the file with date parameters
+    const endpoint = reportType === 'sales'
+      ? `/dashboard/sales-report/export?format=excel&start_date=${startDate}&end_date=${endDate}`
+      : `/dashboard/inventory-report/export?format=excel&start_date=${startDate}&end_date=${endDate}`;
+
+    const filename = reportType === 'sales'
+      ? `SaleReport_${startDate}_${endDate}.xlsx`
+      : `InventoryReport_${startDate}_${endDate}.xlsx`;
+
+    await downloadFile(
+      endpoint,
+      filename,
+      () => {
+        setAlertModal({
+          isOpen: true,
+          title: 'Error',
+          message: 'Failed to download file. Please try again.',
+          type: 'error',
+          onConfirm: null,
+        });
+      }
+    );
+
+    setDateFilterModal({
+      isOpen: false,
+      startDate: '',
+      endDate: '',
+      reportType: '',
+    });
+  };
+
 
   if (loading) {
     return (
@@ -97,6 +169,73 @@ const Reports = () => {
         type={alertModal.type}
         onConfirm={alertModal.onConfirm}
       />
+
+      {/* Date Filter Modal */}
+      {dateFilterModal.isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Select Date Range
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  value={dateFilterModal.startDate}
+                  onChange={(e) =>
+                    setDateFilterModal({
+                      ...dateFilterModal,
+                      startDate: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  value={dateFilterModal.endDate}
+                  onChange={(e) =>
+                    setDateFilterModal({
+                      ...dateFilterModal,
+                      endDate: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={() =>
+                    setDateFilterModal({
+                      isOpen: false,
+                      startDate: '',
+                      endDate: '',
+                      reportType: '',
+                    })
+                  }
+                  className="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDateFilterSubmit}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  Download
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
@@ -187,10 +326,10 @@ const Reports = () => {
             <TrendingUpIcon className="text-green-600" /> Sales Report
           </div>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=pdf', 'sales-report.pdf', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
+            <button className="px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2" onClick={() => handleExportClick('sales')}> 
               <PdfIcon className="w-4 h-4" /> Export PDF
             </button>
-            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => downloadFile('/dashboard/sales-report/export?format=excel', 'sales-report.xlsx', () => setAlertModal({ isOpen: true, title: 'Error', message: 'Failed to download file. Please try again.', type: 'error', onConfirm: null }))}> 
+            <button className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" onClick={() => handleExportClick('sales')}> 
               <ExcelIcon className="w-4 h-4" /> Export Excel
             </button>
           </div>
